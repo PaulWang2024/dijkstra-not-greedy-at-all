@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Dijkstra Is NOT Greedy | Shengbao Wang · Hangzhou Normal University</title>
+<meta content="Complete English paper by Shengbao Wang, Hangzhou Normal University: A global-to-local proof of Dijkstra's algorithm with equations, figures, pseudocode and references." name="description"/>
+<meta content="#f7f8f6" name="theme-color"/><meta content="article" property="og:type"/><meta content="Dijkstra Is NOT Greedy: A Global-to-Local Proof of Correctness" property="og:title"/><meta content="Complete English paper: a three-step exclusion proof and dynamic-programming interpretation of Dijkstra." property="og:description"/>
+<style>
+:root{--bg:#f7f8f6;--paper:#fff;--text:#24303d;--muted:#657382;--line:#dfe6e8;--main:#174e48;--soft:#e7f3ed;--gold:#b27d2b;--shade:#f2f5f7;--radius:16px;color-scheme:light}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;color:var(--text);background:var(--bg);line-height:1.9;letter-spacing:.008em}a{color:var(--main);text-decoration:none}a:hover{text-decoration:underline}button{cursor:pointer;font:inherit}#progress{height:3px;background:var(--gold);width:0;position:fixed;top:0;left:0;z-index:50}.topbar{height:64px;position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 clamp(18px,4vw,50px);background:rgba(247,248,246,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.logo{display:flex;align-items:center;gap:10px;font-weight:780;color:var(--text);letter-spacing:-.02em}.logo-symbol{display:inline-flex;border:2px solid var(--main);border-radius:9px;padding:1px 7px;color:var(--main);font-size:18px}.top-actions{display:flex;gap:8px;align-items:center}.action{border:1px solid var(--line);background:var(--paper);border-radius:9px;padding:7px 12px;font-size:13px;color:var(--text);font-weight:650}.action.primary{background:var(--main);color:#fff;border-color:var(--main)}.hero{max-width:1180px;margin:0 auto;padding:64px 25px 45px}.eyebrow{text-transform:uppercase;letter-spacing:.19em;color:var(--gold);font-size:12px;font-weight:800;margin:0 0 22px}.hero h1{font-size:clamp(34px,4.1vw,58px);line-height:1.27;margin:0;letter-spacing:-.045em;max-width:950px;color:#183e39;font-weight:850}.hero .english{font-family:Georgia,serif;color:var(--muted);font-size:clamp(15px,1.6vw,20px);line-height:1.5;margin-top:15px;max-width:900px}.byline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:28px;color:var(--muted);font-size:14px}.dot{width:3px;height:3px;background:#a3b0b7;border-radius:50%}.reading-layout{max-width:1180px;padding:0 25px;margin:0 auto;display:grid;grid-template-columns:245px minmax(0,1fr);gap:36px;align-items:start}.sidebar{position:sticky;top:86px;align-self:start;max-height:calc(100vh - 114px);overflow:auto;padding:8px 8px 18px 0}.sidebar strong{font-size:12px;letter-spacing:.08em;color:var(--muted);display:block;margin:4px 14px 15px}.toc-link{display:flex;align-items:baseline;gap:10px;padding:7px 10px;margin:2px 0;border-radius:9px;font-size:13px;line-height:1.4;color:#4d6170}.toc-link:hover{background:#edf2ef;text-decoration:none}.toc-link.active{background:var(--soft);color:var(--main);font-weight:750}.toc-link.sub{padding-left:24px;font-size:12.5px}.toc-no{min-width:22px;font-variant-numeric:tabular-nums;color:#8a999c}.paper{background:var(--paper);border:1px solid var(--line);box-shadow:0 20px 55px rgba(40,59,68,.055);border-radius:var(--radius);padding:clamp(22px,4vw,54px);min-width:0}.article-heading{font-size:19px;font-weight:800;margin:0 0 15px;color:var(--main)}.abstract{padding:25px 28px;background:#f1f7f4;border-left:4px solid #558b72;border-radius:0 12px 12px 0;margin-bottom:48px;font-size:15px}.abstract p{margin:0}.paper h1{font-size:26px;line-height:1.35;color:#203a38;margin:45px 0 20px;border-bottom:1px solid var(--line);padding-bottom:12px;letter-spacing:-.02em}.paper h2{font-size:19px;line-height:1.45;margin:31px 0 14px;color:#254e4a;letter-spacing:-.01em}.paper h1:first-of-type{margin-top:0}.secno{display:inline-block;font-size:.78em;margin-right:14px;color:#a37b40;font-weight:800}.paper p{font-size:15.25px;margin:0 0 16px;text-align:justify;overflow-wrap:anywhere}.paper em{font-style:normal;font-weight:660;color:#1a584c}.paper .math.display{display:block;text-align:center;overflow-x:auto;overflow-y:hidden;padding:4px 0;margin:19px 0 22px}.paper .math.inline{white-space:normal}.paper figure{margin:25px 0 30px}.figure-art{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fbfcfb;padding:6px}.figure-art svg{display:block;width:100%;height:auto;min-width:620px}.paper figcaption{color:var(--muted);font-size:13px;line-height:1.65;text-align:center;margin-top:9px}.lemma,.theorem,.proof{margin:18px 0 20px;padding:18px 20px;border-left:3px solid #6c9986;background:#f7faf8;border-radius:0 10px 10px 0}.theorem{border-left-color:#bd8b40;background:#fffaf2}.proof{border-left-color:#9aabb3;background:#f8fafb}.lemma p,.theorem p,.proof p{font-size:14.4px}.paper table{width:100%;border-collapse:collapse;margin:15px 0 22px;font-size:13.5px;line-height:1.65}.paper table caption{font-size:13.5px;font-weight:680;margin-bottom:10px;color:var(--muted)}.paper th{text-align:left;color:var(--main);background:#f1f6f4}.paper td,.paper th{padding:11px;border-bottom:1px solid var(--line);vertical-align:top}.algorithm-card{margin:27px 0;border:1px solid #cddbd7;border-radius:14px;overflow:hidden}.algorithm-head{background:#edf5f1;padding:15px 20px;display:flex;align-items:center;gap:13px;flex-wrap:wrap;color:var(--main)}.overline{text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:#788f86;font-weight:800}.algo-lines{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.7px;line-height:2.25;overflow-x:auto;padding:13px 10px;white-space:nowrap}.algo-lines>div{display:flex;min-width:max-content;padding:0 9px;border-radius:5px}.algo-lines>div:nth-child(2n){background:#f8fafb}.algo-lines .line-no{display:inline-block;color:#a2afb4;min-width:40px;user-select:none}.algo-lines .indent>span:nth-child(2){padding-left:20px}.algo-lines .indent2>span:nth-child(2){padding-left:40px}.algo-lines .indent3>span:nth-child(2){padding-left:60px}.step-tag{font-family:ui-sans-serif,sans-serif;margin-left:12px;background:#e4f1e9;color:#2e6858;border-radius:5px;padding:3px 7px;font-size:11px;font-weight:750}.step-tag.blue{background:#e8effa;color:#38699a}.algo-note{padding:0 20px 14px;color:var(--muted);font-size:12.5px!important;text-align:left!important}.cite{font-size:.72em;vertical-align:super;white-space:nowrap}.cite-link{font-weight:650}.refs{padding-left:30px;margin-top:20px}.refs li{font-size:13.2px;line-height:1.65;margin-bottom:10px;padding-left:8px;overflow-wrap:anywhere}.references{border-top:1px solid var(--line);padding-top:15px;margin-top:40px}.ref-title{margin-top:0!important}.footer{margin:55px auto 40px;max-width:1120px;padding:20px 25px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line)}#scrolltop{position:fixed;right:22px;bottom:22px;border:1px solid #c9d7d0;background:#fff;border-radius:50%;width:42px;height:42px;box-shadow:0 6px 18px #24303d14;display:none;color:var(--main)}#menu-toggle{display:none}.mobile-panel{display:none}@media(max-width:940px){.reading-layout{display:block;max-width:810px}.sidebar{display:none}.hero{max-width:810px;padding:45px 20px 30px}.reading-layout{padding:0 12px}.paper{padding:28px}.topbar{padding:0 16px}.mobile-panel.open{display:block;position:fixed;top:64px;right:0;left:0;z-index:35;background:#fff;border-bottom:1px solid var(--line);padding:14px 25px;max-height:70vh;overflow:auto;box-shadow:0 15px 35px #172d251d}.mobile-panel .toc-link{font-size:14px}.mobile-panel .toc-link.sub{font-size:13px}#menu-toggle{display:block}}@media(max-width:600px){.hero h1{font-size:32px}.hero{padding:35px 20px 24px}.hero .english{font-size:15px}.top-actions .print{display:none}.paper{padding:22px 16px}.paper h1{font-size:23px}.paper h2{font-size:18px}.abstract{padding:20px 17px}.paper p{font-size:14.6px}.paper td,.paper th{font-size:12px;padding:7px}.footer{display:block}.byline{font-size:12px}}@media print{.topbar,.sidebar,.mobile-panel,.footer,#progress,#scrolltop{display:none!important}.hero{padding:0 10px 20px}.hero h1{font-size:26px}.reading-layout{display:block;padding:0}.paper{box-shadow:none;border:0;padding:0}.figure-art svg{min-width:0}.paper h1,.paper h2{break-after:avoid}.algorithm-card,.paper figure{break-inside:avoid}.paper{font-size:12px}body{background:white}}
+
+/* Bilingual navigation */
+.lang-switch{display:inline-flex;border:1px solid #cbd9d2;background:#eaf2ee;border-radius:9px;padding:3px;gap:2px;white-space:nowrap}
+.lang-switch a{font-size:12px;line-height:1.4;padding:5px 10px;border-radius:6px;font-weight:750;color:#46645a;text-decoration:none}
+.lang-switch a[aria-current="page"]{background:var(--main);color:#fff;box-shadow:0 1px 3px #224c3d30}
+.lang-switch a:hover:not([aria-current="page"]){background:#dbeae2}
+.byline strong{color:#253d39}.article-callout{padding:12px 17px;background:#f3f8f5;border:1px solid #d7e6dc;border-radius:10px;margin-top:22px;font-size:13px;color:#527366}
+@media(max-width:600px){.lang-switch a{padding:5px 8px}.top-actions{gap:5px}.action{padding:7px 9px;font-size:12px}.logo span:last-child{font-size:13px}.hero .byline{gap:8px}}
+</style>
+<script>window.MathJax={tex:{inlineMath:[["\\(","\\)"],["$","$"]],displayMath:[["\\[","\\]"],["$$","$$"]],processEscapes:true},options:{skipHtmlTags:['script','style','textarea','pre','code']},svg:{fontCache:'global'}};</script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link href="index.html" hreflang="zh-CN" rel="alternate"/><link href="en.html" hreflang="en" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/></head><body>
+<div id="progress"></div><header class="topbar"><div class="logo"><span class="logo-symbol">D</span><span>Global → Local</span></div><div class="top-actions"><nav aria-label="Language / 语言" class="lang-switch"><a href="index.html" hreflang="zh-CN" lang="zh-CN">中文</a><a aria-current="page" href="en.html" hreflang="en" lang="en">EN</a></nav><a class="action" download="" href="paper-en.pdf">Download PDF</a><button class="action print" onclick="window.print()">Print</button><button aria-controls="mobile-panel" aria-expanded="false" class="action" id="menu-toggle">Contents ☰</button></div></header>
+<div class="mobile-panel" id="mobile-panel"><strong>CONTENTS</strong><a class="toc-link top" href="#introduction"><span class="toc-no">1</span><span>Introduction</span></a><a class="toc-link top" href="#sec:prelim"><span class="toc-no">2</span><span>Preliminaries and the Search-Space Partition</span></a><a class="toc-link sub" href="#a-motivating-first-step"><span class="toc-no">2.1</span><span>A motivating first step</span></a><a class="toc-link sub" href="#dijkstras-original-three-way-partition"><span class="toc-no">2.2</span><span>Dijkstra’s original
+three-way partition</span></a><a class="toc-link sub" href="#the-first-entry-property"><span class="toc-no">2.3</span><span>The first-entry property</span></a><a class="toc-link top" href="#sec:principle"><span class="toc-no">3</span><span>The Global-to-Local Principle and Path
+Exclusion</span></a><a class="toc-link sub" href="#the-global-path-space"><span class="toc-no">3.1</span><span>The global path space</span></a><a class="toc-link sub" href="#from-a-global-minimum-to-a-local-shortest-path"><span class="toc-no">3.2</span><span>From a global
+minimum to a local shortest path</span></a><a class="toc-link sub" href="#the-exclusion-principle"><span class="toc-no">3.3</span><span>The exclusion principle</span></a><a class="toc-link top" href="#sec:proof"><span class="toc-no">4</span><span>A Three-Step Exclusion Proof of Correctness</span></a><a class="toc-link sub" href="#step-1-frontier-exclusion"><span class="toc-no">4.1</span><span>Step 1: Frontier exclusion</span></a><a class="toc-link sub" href="#step-2-relaxation-exclusion"><span class="toc-no">4.2</span><span>Step 2: Relaxation exclusion</span></a><a class="toc-link sub" href="#step-3-global-minimum-extraction"><span class="toc-no">4.3</span><span>Step 3: Global minimum
+extraction</span></a><a class="toc-link sub" href="#sec:correspondence"><span class="toc-no">4.4</span><span>Correspondence with the standard
+algorithm</span></a><a class="toc-link top" href="#sec:discussion"><span class="toc-no">5</span><span>Discussion: Dynamic Programming Rather Than
+Greedy Selection</span></a><a class="toc-link sub" href="#the-dynamic-programming-recurrence"><span class="toc-no">5.1</span><span>The dynamic-programming
+recurrence</span></a><a class="toc-link sub" href="#why-the-greedy-classification-is-incorrect"><span class="toc-no">5.2</span><span>Why the greedy
+classification is incorrect</span></a><a class="toc-link top" href="#conclusion"><span class="toc-no">6</span><span>Conclusion</span></a><a class="toc-link top" href="#acknowledgments"><span>Acknowledgments</span></a><a class="toc-link top" href="#references">References</a></div>
+<section class="hero"><p class="eyebrow">ALGORITHMS · RESEARCH PAPER · FULL TEXT</p><h1>Dijkstra Is NOT Greedy:<br/>A Global-to-Local Proof of Correctness</h1><p class="english">Dijkstra 不是贪心算法：一种从全局到局部的正确性证明</p><div class="byline"><strong>Shengbao Wang</strong><span class="dot"></span><span>Hangzhou Normal University</span><span class="dot"></span><span>Full paper · v11</span></div></section>
+<div class="reading-layout"><nav aria-label="论文目录" class="sidebar"><strong>CONTENTS</strong><a class="toc-link top" href="#introduction"><span class="toc-no">1</span><span>Introduction</span></a><a class="toc-link top" href="#sec:prelim"><span class="toc-no">2</span><span>Preliminaries and the Search-Space Partition</span></a><a class="toc-link sub" href="#a-motivating-first-step"><span class="toc-no">2.1</span><span>A motivating first step</span></a><a class="toc-link sub" href="#dijkstras-original-three-way-partition"><span class="toc-no">2.2</span><span>Dijkstra’s original
+three-way partition</span></a><a class="toc-link sub" href="#the-first-entry-property"><span class="toc-no">2.3</span><span>The first-entry property</span></a><a class="toc-link top" href="#sec:principle"><span class="toc-no">3</span><span>The Global-to-Local Principle and Path
+Exclusion</span></a><a class="toc-link sub" href="#the-global-path-space"><span class="toc-no">3.1</span><span>The global path space</span></a><a class="toc-link sub" href="#from-a-global-minimum-to-a-local-shortest-path"><span class="toc-no">3.2</span><span>From a global
+minimum to a local shortest path</span></a><a class="toc-link sub" href="#the-exclusion-principle"><span class="toc-no">3.3</span><span>The exclusion principle</span></a><a class="toc-link top" href="#sec:proof"><span class="toc-no">4</span><span>A Three-Step Exclusion Proof of Correctness</span></a><a class="toc-link sub" href="#step-1-frontier-exclusion"><span class="toc-no">4.1</span><span>Step 1: Frontier exclusion</span></a><a class="toc-link sub" href="#step-2-relaxation-exclusion"><span class="toc-no">4.2</span><span>Step 2: Relaxation exclusion</span></a><a class="toc-link sub" href="#step-3-global-minimum-extraction"><span class="toc-no">4.3</span><span>Step 3: Global minimum
+extraction</span></a><a class="toc-link sub" href="#sec:correspondence"><span class="toc-no">4.4</span><span>Correspondence with the standard
+algorithm</span></a><a class="toc-link top" href="#sec:discussion"><span class="toc-no">5</span><span>Discussion: Dynamic Programming Rather Than
+Greedy Selection</span></a><a class="toc-link sub" href="#the-dynamic-programming-recurrence"><span class="toc-no">5.1</span><span>The dynamic-programming
+recurrence</span></a><a class="toc-link sub" href="#why-the-greedy-classification-is-incorrect"><span class="toc-no">5.2</span><span>Why the greedy
+classification is incorrect</span></a><a class="toc-link top" href="#conclusion"><span class="toc-no">6</span><span>Conclusion</span></a><a class="toc-link top" href="#acknowledgments"><span>Acknowledgments</span></a><a class="toc-link top" href="#references">References</a></nav>
+<main class="paper" id="main"><div class="abstract"><h2 class="article-heading">Abstract</h2><p>Dijkstra’s algorithm is traditionally classified as a greedy
+algorithm. This paper argues that this classification misrepresents the
+mechanism by which the algorithm determines shortest paths. We present a
+direct global-to-local proof of correctness. At each iteration, the
+algorithm identifies a shortest path over the entire set of paths whose
+endpoints remain unsolved. This global minimum is necessarily a shortest
+path to its own endpoint. More fundamentally, the algorithm uses already
+determined shortest paths to establish one additional shortest path at
+each iteration. We identify this progression as dynamic programming. A
+three-step exclusion proof shows how the full path space is reduced to
+frontier candidates, how relaxation removes inferior alternatives, and
+why minimum extraction yields the global minimum. The choice is thus
+determined by a global comparison, not by an optimistic local greedy
+choice. We conclude that the algorithm is more accurately characterized
+by dynamic programming and deterministic path exclusion than by the
+traditional greedy classification.</p></div><h1 id="introduction"><span class="secno">1</span>Introduction</h1>
+<p>Since Dijkstra introduced it in 1959 <sup class="cite">[<a class="cite-link" href="#ref-1">1</a>]</sup>, this elegant shortest-path algorithm
+has become one of the best-known algorithms in computer science. It has
+important practical applications, including route planning in map
+navigation and routing in communication networks <sup class="cite">[<a class="cite-link" href="#ref-2">2</a>]</sup>. It has also long been regarded
+as a standard greedy algorithm. This classification is prominent in
+classical textbooks <sup class="cite">[<a class="cite-link" href="#ref-3">3</a>, <a class="cite-link" href="#ref-4">4</a>, <a class="cite-link" href="#ref-5">5</a>]</sup>.
+Kleinberg and Tardos describe greedy decisions as being made
+<em>myopically</em>, with each step optimizing a local criterion. Cormen
+et al. characterize Dijkstra as greedy because it selects the unsettled
+vertex with the smallest tentative distance. Their correctness proof
+then establishes the finality of the selected vertex’s distance.
+Sedgewick and Wayne present the same minimum-distance and relaxation
+operations, while Princeton course materials likewise place shortest
+paths among greedy algorithms <sup class="cite">[<a class="cite-link" href="#ref-2">2</a>, <a class="cite-link" href="#ref-6">6</a>]</sup>. Roughgarden offers
+a particularly clear example: a minimum boundary candidate is selected,
+and its optimality for the chosen endpoint is subsequently proved <sup class="cite">[<a class="cite-link" href="#ref-7">7</a>]</sup>.</p>
+<p>These proofs are rigorous. They also employ properties of paths that
+cross the boundary of the settled set. Their principal conclusion,
+however, concerns the shortest-path distance of the <em>selected
+endpoint</em>. The choice is stated before its correctness is
+established. This order supports the customary picture of a local greedy
+decision followed by a proof of its safety. It does not expose the
+stronger fact that the selected candidate is the minimum over <em>all
+paths to currently unsolved destinations</em>.</p>
+<p>The dynamic-programming character of shortest-path algorithms has
+also been studied. Bellman’s principle of optimality and Lawler’s
+treatment provide important foundations <sup class="cite">[<a class="cite-link" href="#ref-8">8</a>, <a class="cite-link" href="#ref-9">9</a>]</sup>. Sniedovich analyzes
+Dijkstra as a dynamic-programming procedure, while Misra gives a
+fixed-point interpretation <sup class="cite">[<a class="cite-link" href="#ref-10">10</a>, <a class="cite-link" href="#ref-11">11</a>]</sup>. Lew examines the
+relationship between greedy algorithms and dynamic programming, but
+still describes Dijkstra as greedy <sup class="cite">[<a class="cite-link" href="#ref-12">12</a>]</sup>. These studies reveal important recursive
+features. They do not make the global minimization over all
+unsolved-destination paths the central object of the correctness
+argument.</p>
+<p>This paper takes that global path space as its starting point. We
+prove that every iteration identifies its absolute shortest path. The
+shortest path to the selected endpoint then follows directly from this
+global result. To establish this claim, we give a three-step exclusion
+proof. The first step restricts the search to the frontier. The second
+uses optimal substructure and relaxation to retain the best candidate
+for each frontier vertex. The third determines the minimum over the
+remaining candidates. These reductions correspond to the operations of
+Dijkstra’s algorithm itself.</p>
+<p>The resulting interpretation reverses the familiar explanatory order.
+The algorithm does not reach a global conclusion by trusting a locally
+attractive choice. Instead, deterministic exclusions establish the
+global minimum before its endpoint is declared solved. Each iteration
+uses previously established shortest paths to obtain a new one. We
+therefore argue that Dijkstra’s algorithm is fundamentally a
+dynamic-programming algorithm, and that its customary classification as
+greedy is incorrect. This claim concerns the mathematical basis of its
+minimum selection, not the validity of earlier correctness proofs.</p>
+<h1 id="sec:prelim"><span class="secno">2</span>Preliminaries and the Search-Space Partition</h1>
+<p>Let <span class="math inline">\(G=(V,E,w)\)</span> be a finite
+directed weighted graph with source <span class="math inline">\(s\in
+V\)</span>. To make the exclusion argument especially transparent, we
+assume strictly positive edge weights throughout: <span class="math display">\[w(e)&gt;0\qquad (e\in E).\]</span> For a path
+<span class="math inline">\(P\)</span>, let <span class="math inline">\(w(P)\)</span> be the sum of its edge weights.
+Write <span class="math inline">\(\delta(s,v)\)</span> for the
+shortest-path distance to a vertex <span class="math inline">\(v\)</span> reachable from <span class="math inline">\(s\)</span>. Vertices not reachable from <span class="math inline">\(s\)</span> are not included in the finite-distance
+minimizations below; if no unsolved vertex is reachable, the procedure
+terminates.</p>
+<h2 id="a-motivating-first-step"><span class="secno">2.1</span>A motivating first step</h2>
+<p>The source <span class="math inline">\(s\)</span> itself may be
+regarded as the first solved vertex, at distance <span class="math inline">\(0\)</span>. The next vertex to be solved is
+particularly easy to identify: it is an endpoint of a minimum-weight
+outgoing edge from <span class="math inline">\(s\)</span>. Indeed,
+putting <span class="math display">\[m=\min_{(s,v)\in E}w(s,v),\]</span>
+any such one-edge path has length <span class="math inline">\(m\)</span>. Every path from <span class="math inline">\(s\)</span> with two or more edges must start with
+an outgoing edge whose length is at least <span class="math inline">\(m\)</span> and must then add at least one
+positive-weight edge. Thus every multi-edge path is strictly longer than
+<span class="math inline">\(m\)</span>. The minimum-weight one-edge path
+is the absolute shortest among all nonempty paths starting at <span class="math inline">\(s\)</span>.</p>
+<p>The underlying observation is elementary: <em>adding an edge to a
+path necessarily makes it longer</em>. It also prompts the question
+driving this paper. Does every subsequent iteration likewise identify an
+absolute shortest path from a global set of paths that are still
+relevant? Our proof answers yes.</p>
+<h2 id="dijkstras-original-three-way-partition"><span class="secno">2.2</span>Dijkstra’s original
+three-way partition</h2>
+<p>Dijkstra already divided vertices into three classes in Problem 2 of
+his original paper <sup class="cite">[<a class="cite-link" href="#ref-1">1</a>]</sup>. Set A contains vertices with known
+shortest paths. Set B contains the remaining vertices directly connected
+to A; the next vertex is chosen from this set. Set C contains all other
+vertices. We use different symbols but retain this three-region
+structure.</p>
+<p>At iteration <span class="math inline">\(t\)</span>, let <span class="math inline">\(\mathcal{S}_t\)</span> be the <em>solved set</em>,
+for which <span class="math display">\[d(x)=\delta(s,x)\qquad
+(x\in\mathcal{S}_t),\]</span> and let <span class="math inline">\(\mathcal{U}_t=V\setminus\mathcal{S}_t\)</span> be
+the <em>unsolved set</em>. The initially solved set is <span class="math inline">\(\{s\}\)</span>, with <span class="math inline">\(d(s)=0\)</span>. Within <span class="math inline">\(\mathcal{U}_t\)</span>, define <span class="math display">\[\mathcal{F}_t=\{f\in\mathcal{U}_t:\exists
+x\in\mathcal{S}_t\text{ such that }(x,f)\in E\}\]</span> as the
+<em>frontier</em> and <span class="math inline">\(\mathcal{I}_t=\mathcal{U}_t\setminus\mathcal{F}_t\)</span>
+as the <em>invisible set</em>. These are disjoint partitions: <span class="math display">\[V=\mathcal{S}_t\;\dot\cup\;\mathcal{U}_t,
+\qquad \mathcal{U}_t=\mathcal{F}_t\;\dot\cup\;\mathcal{I}_t.\]</span>
+Here “invisible” means only that the vertex is not directly exposed by
+an outgoing edge from the current solved set. Figure <a data-reference="fig:spatial" data-reference-type="ref" href="#fig:spatial">1</a> illustrates Dijkstra’s original
+three-region partition in our notation. For directed graphs, the
+frontier uses edges directed <em>out of</em> the solved region.</p>
+<figure id="fig:spatial"><div class="figure-art"><svg aria-labelledby="fig-title fig-desc" height="432" role="img" viewbox="0 0 940 432" width="940" xmlns="http://www.w3.org/2000/svg">
+<title id="fig-title">Three-region partition: solved, frontier, and invisible sets</title><desc id="fig-desc">V consists of solved and unsolved sets. Every path into the unsolved region first crosses the frontier.</desc>
+<defs><marker id="arrow" markerheight="7" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0 0 L7 3.5 L0 7 z" fill="#617489"></path></marker><marker id="arrowGold" markerheight="7" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0 0 L7 3.5 L0 7 z" fill="#c08b35"></path></marker></defs>
+<rect fill="#fafbf9" height="405" rx="22" stroke="#9eafb7" stroke-width="1.5" width="916" x="12" y="12"></rect><text class="label" fill="#243a4a" font-size="20" x="35" y="43">V</text>
+<rect fill="#e7f3ed" height="298" rx="18" stroke="#7da792" stroke-width="2" width="316" x="40" y="69"></rect><text fill="#205c42" font-size="18" font-weight="700" text-anchor="middle" x="196" y="100">𝓢ₜ · Solved</text>
+<rect fill="#f0f4f8" height="298" rx="18" stroke="#93a7b8" stroke-width="2" width="512" x="385" y="69"></rect><text fill="#364d65" font-size="18" font-weight="700" text-anchor="middle" x="641" y="100">𝓤ₜ · Unsolved</text>
+<rect fill="#fff2da" height="212" rx="16" stroke="#d5ac6b" stroke-dasharray="7 5" stroke-width="2" width="192" x="408" y="123"></rect><text fill="#8c5e13" font-size="18" font-weight="700" text-anchor="middle" x="504" y="151">𝓕ₜ · Frontier</text>
+<rect fill="#e8eef6" height="212" rx="16" stroke="#93afcc" stroke-dasharray="7 5" stroke-width="2" width="249" x="621" y="123"></rect><text fill="#3d6289" font-size="18" font-weight="700" text-anchor="middle" x="745" y="151">𝓘ₜ · Invisible</text>
+<line stroke="#b27441" stroke-dasharray="4 6" stroke-width="2" x1="369" x2="369" y1="59" y2="384"></line><text fill="#866047" font-size="13" text-anchor="middle" x="369" y="398">First-entry boundary</text>
+<g fill="none" marker-end="url(#arrow)" stroke="#617489" stroke-width="2.6"><path d="M110 234 L194 179"></path><path d="M110 234 L189 297"></path><path d="M203 180 L288 234"></path><path d="M204 297 L288 236"></path><path d="M532 200 L677 204"></path><path d="M532 280 L717 280"></path><path d="M677 204 L783 234"></path><path d="M715 277 L790 237"></path></g>
+<g fill="none" marker-end="url(#arrowGold)" stroke="#c08b35" stroke-width="3.5"><path d="M301 230 L473 199"></path><path d="M202 294 L474 279"></path></g>
+<g font-family="Arial, sans-serif" font-size="15" font-weight="700" text-anchor="middle"><circle cx="108" cy="235" fill="#fff" r="19" stroke="#529476" stroke-width="2"></circle><text fill="#24563d" x="108" y="240">s</text><circle cx="195" cy="177" fill="#fff" r="17" stroke="#529476" stroke-width="2"></circle><text x="195" y="182">a</text><circle cx="196" cy="299" fill="#fff" r="17" stroke="#529476" stroke-width="2"></circle><text x="196" y="304">b</text><circle cx="290" cy="234" fill="#fff" r="17" stroke="#529476" stroke-width="2"></circle><text x="290" y="239">x</text><circle cx="493" cy="195" fill="#fff" r="17" stroke="#c08b35" stroke-width="2"></circle><text x="493" y="200">f₁</text><circle cx="492" cy="278" fill="#fff" r="17" stroke="#c08b35" stroke-width="2"></circle><text x="492" y="283">f₂</text><circle cx="678" cy="201" fill="#fff" r="17" stroke="#819fc2" stroke-width="2"></circle><text x="678" y="206">u₁</text><circle cx="718" cy="278" fill="#fff" r="17" stroke="#819fc2" stroke-width="2"></circle><text x="718" y="283">u₂</text><circle cx="794" cy="232" fill="#fff" r="17" stroke="#819fc2" stroke-width="2"></circle><text x="794" y="237">u₃</text></g>
+<rect fill="#fff" height="39" rx="11" stroke="#d2dbe2" width="270" x="608" y="345"></rect><text fill="#52677b" font-size="14" text-anchor="middle" x="743" y="369">Deeper paths cross the frontier</text>
+</svg></div><figcaption><b>Figure 1.</b> Dijkstra's three-way partition at iteration <i>t</i>. Every path from the source to an unsolved vertex first enters the frontier; any further extension adds positive length.</figcaption></figure>
+<h2 id="the-first-entry-property"><span class="secno">2.3</span>The first-entry property</h2>
+<p>The partition has a simple but decisive consequence.</p>
+<div class="lemma" id="lem:firstentry">
+<p><strong>Lemma 1</strong> (First-entry lemma). <em>Let <span class="math inline">\(P=(v_0=s,v_1,\ldots,v_k=u)\)</span> be any path
+ending at <span class="math inline">\(u\in\mathcal{U}_t\)</span>. If
+<span class="math inline">\(v_j\)</span> is the first vertex of <span class="math inline">\(P\)</span> in <span class="math inline">\(\mathcal{U}_t\)</span>, then <span class="math inline">\(v_{j-1}\in\mathcal{S}_t\)</span> and <span class="math inline">\(v_j\in\mathcal{F}_t\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> By the choice of <span class="math inline">\(j\)</span>, all preceding vertices of <span class="math inline">\(P\)</span>, in particular <span class="math inline">\(v_{j-1}\)</span>, belong to <span class="math inline">\(\mathcal{S}_t\)</span>. Since <span class="math inline">\((v_{j-1},v_j)\in E\)</span> and <span class="math inline">\(v_j\in\mathcal{U}_t\)</span>, the definition of
+<span class="math inline">\(\mathcal{F}_t\)</span> gives <span class="math inline">\(v_j\in\mathcal{F}_t\)</span>. ◻</p>
+</div>
+<p>Thus every path from the source into the unsolved region first
+reaches a frontier vertex. Even a path ending deep in <span class="math inline">\(\mathcal{I}_t\)</span> cannot bypass this
+boundary. This fact will justify the first exclusion in Section <a data-reference="sec:proof" data-reference-type="ref" href="#sec:proof">4</a>.</p>
+<h1 id="sec:principle"><span class="secno">3</span>The Global-to-Local Principle and Path
+Exclusion</h1>
+<h2 id="the-global-path-space"><span class="secno">3.1</span>The global path space</h2>
+<p>For each <span class="math inline">\(u\in\mathcal{U}_t\)</span>, let
+<span class="math inline">\(\mathcal P(s,u)\)</span> be the set of paths
+from <span class="math inline">\(s\)</span> to <span class="math inline">\(u\)</span>. Define the global search space at
+iteration <span class="math inline">\(t\)</span> by <span class="math display">\[\mathcal{P}(\mathcal{U}_t)=\bigcup_{u\in\mathcal{U}_t}\mathcal
+P(s,u).\]</span> The objective of the iteration is to identify <span class="math display">\[P_t^*\in\arg\min_{P\in\mathcal{P}(\mathcal{U}_t)}w(P).\]</span>
+The minimum is taken over <em>all paths ending at unsolved
+vertices</em>, not over a collection of shortest paths that are assumed
+to have already been found.</p>
+<h2 id="from-a-global-minimum-to-a-local-shortest-path"><span class="secno">3.2</span>From a global
+minimum to a local shortest path</h2>
+<p>Suppose <span class="math inline">\(P_t^*\)</span> ends at <span class="math inline">\(u^*\)</span>. Since <span class="math display">\[\mathcal
+P(s,u^*)\subseteq\mathcal{P}(\mathcal{U}_t),\]</span> every path <span class="math inline">\(Q\)</span> from <span class="math inline">\(s\)</span> to <span class="math inline">\(u^*\)</span> satisfies <span class="math display">\[w(P_t^*)\le w(Q).\]</span> Thus a path that
+minimizes the global search space necessarily minimizes the path set for
+its own endpoint. <em>One global shortest path therefore settles one
+additional vertex.</em> The remaining task is to show how Dijkstra
+determines this global minimum without enumerating all paths.</p>
+<h2 id="the-exclusion-principle"><span class="secno">3.3</span>The exclusion principle</h2>
+<p>To find the shortest path, one may exclude any path that is strictly
+longer than another admissible candidate. Indeed, if <span class="math inline">\(P_1\)</span> is admissible and <span class="math inline">\(w(P_1)&lt;w(P_2)\)</span>, then <span class="math inline">\(P_2\)</span> cannot attain the current minimum. If
+several candidates tie, retaining one is sufficient to determine a
+shortest path.</p>
+<p>This exclusion refers to the <em>current iteration</em>. A path
+extended beyond the first unsolved vertex may be irrelevant to the
+present global minimum, but its later edges can become relevant after
+that vertex is settled. The three-step proof below uses this distinction
+to reduce the current search space without losing any future
+shortest-path solution.</p>
+<h1 id="sec:proof"><span class="secno">4</span>A Three-Step Exclusion Proof of Correctness</h1>
+<p>Fix iteration <span class="math inline">\(t\)</span> with a nonempty
+reachable frontier. Distances <span class="math inline">\(d(x)=\delta(s,x)\)</span> for all <span class="math inline">\(x\in\mathcal{S}_t\)</span> are already finalized.
+We prove that Dijkstra’s next extraction realizes the global minimum in
+<span class="math inline">\(\mathcal{P}(\mathcal{U}_t)\)</span>.</p>
+<h2 id="step-1-frontier-exclusion"><span class="secno">4.1</span>Step 1: Frontier exclusion</h2>
+<p>Take an arbitrary path <span class="math display">\[P=(s=v_0,v_1,\ldots,v_k=u)\in\mathcal{P}(\mathcal{U}_t).\]</span>
+Let <span class="math inline">\(v_j\)</span> be its first unsolved
+vertex. By Lemma <a data-reference="lem:firstentry" data-reference-type="ref" href="#lem:firstentry">1</a>, <span class="math inline">\(v_j\in\mathcal{F}_t\)</span>. Its prefix <span class="math inline">\(P^{\mathrm{first}}=(v_0,\ldots,v_j)\)</span> also
+belongs to <span class="math inline">\(\mathcal{P}(\mathcal{U}_t)\)</span>. If <span class="math inline">\(P\)</span> continues past <span class="math inline">\(v_j\)</span>, it must acquire at least one more
+positive-weight edge, so <span class="math display">\[w(P^{\mathrm{first}})&lt;w(P).\]</span> Thus no
+path containing more than one unsolved vertex can be the current global
+minimum: a shorter path already ends at its first frontier vertex. What
+remains relevant at this iteration is the form <span class="math display">\[s\rightsquigarrow x\to f,
+  \qquad x\in\mathcal{S}_t,\quad f\in\mathcal{F}_t,\]</span> with every
+internal vertex in the solved set and exactly one unsolved vertex, its
+endpoint <span class="math inline">\(f\)</span>. This is the
+mathematical reason why it suffices to consider frontier vertices rather
+than paths going further into the unsolved region.</p>
+<h2 id="step-2-relaxation-exclusion"><span class="secno">4.2</span>Step 2: Relaxation exclusion</h2>
+<p>Fix <span class="math inline">\(f\in\mathcal{F}_t\)</span>. Every
+candidate surviving Step 1 is of the form <span class="math display">\[P=Q(s,x)\circ(x,f),\qquad
+x\in\mathcal{S}_t.\]</span> First consider the prefix to <span class="math inline">\(x\)</span>. Since <span class="math inline">\(x\)</span> has already been solved, an arbitrary
+prefix <span class="math inline">\(Q(s,x)\)</span> cannot improve on
+<span class="math inline">\(d(x)=\delta(s,x)\)</span>. If it is strictly
+longer, replacing it by a finalized shortest prefix produces a strictly
+shorter candidate to <span class="math inline">\(f\)</span>. We
+therefore need only the candidate value <span class="math display">\[d(x)+w(x,f)\]</span> for each boundary edge <span class="math inline">\((x,f)\)</span>. This is the optimal-substructure
+reason why relaxation extends finalized shortest distances, rather than
+enumerating earlier paths.</p>
+<p>Several solved predecessors may lead to the same frontier vertex
+<span class="math inline">\(f\)</span>. The shortest candidate among
+them is <span class="math display">\[D_t(f)=
+  \min_{\substack{x\in\mathcal{S}_t\\(x,f)\in E}}
+  \{d(x)+w(x,f)\}.\]</span> All longer candidates to this same endpoint
+can now be excluded; if candidates tie, one representative suffices.
+Thus Step 2 comprises both optimal-prefix replacement and same-endpoint
+minimization. Both reductions are reflected in the relaxation operation.
+After Step 2, the current search is represented by the frontier values
+<span class="math display">\[\{D_t(f):f\in\mathcal{F}_t\}.\]</span></p>
+<h2 id="step-3-global-minimum-extraction"><span class="secno">4.3</span>Step 3: Global minimum
+extraction</h2>
+<p>Choose <span class="math display">\[f^*\in\arg\min_{f\in\mathcal{F}_t}D_t(f),
+\qquad D^*=D_t(f^*).\]</span> We show that this is the minimum not only
+among frontier representatives but among <em>all</em> paths in <span class="math inline">\(\mathcal{P}(\mathcal{U}_t)\)</span>.</p>
+<p>Take any <span class="math inline">\(P\in\mathcal{P}(\mathcal{U}_t)\)</span>. Let <span class="math inline">\(f\)</span> be its first unsolved vertex, <span class="math inline">\(x\)</span> its predecessor, and <span class="math inline">\(L_x\)</span> the length of the prefix from <span class="math inline">\(s\)</span> to <span class="math inline">\(x\)</span>. As <span class="math inline">\(x\in\mathcal{S}_t\)</span>, <span class="math inline">\(d(x)\le L_x\)</span>. Since <span class="math inline">\(D_t(f)\)</span> is the least candidate over all
+solved-to-<span class="math inline">\(f\)</span> boundary edges, <span class="math display">\[D_t(f)\le d(x)+w(x,f)\le L_x+w(x,f).\]</span> The
+remainder of <span class="math inline">\(P\)</span> after <span class="math inline">\(f\)</span> has nonnegative length, so <span class="math inline">\(w(P)\ge L_x+w(x,f)\)</span>. By the choice of
+<span class="math inline">\(f^*\)</span>, <span class="math inline">\(D_t(f)\ge D_t(f^*)\)</span>. Combining gives <span class="math display">\[\begin{aligned}
+w(P)&amp;\ge L_x+w(x,f)\\
+     &amp;\ge d(x)+w(x,f)\\
+     &amp;\ge D_t(f)\\
+     &amp;\ge D_t(f^*)=D^*.
+\end{aligned}\]</span> A path attaining <span class="math inline">\(D^*\)</span> exists, namely an already finalized
+shortest prefix followed by the corresponding boundary edge. Therefore
+<span class="math display">\[D^*=\min_{P\in\mathcal{P}(\mathcal{U}_t)}
+w(P).\]</span></p>
+<div class="theorem" id="thm:iteration">
+<p><strong>Theorem 1</strong> (Correctness of one iteration). <em>If all
+edge weights are positive and at least one unsolved vertex is reachable,
+then any <span class="math inline">\(f^*\)</span> minimizing <span class="math inline">\(D_t(f)\)</span> over <span class="math inline">\(\mathcal{F}_t\)</span> satisfies <span class="math display">\[D_t(f^*)=\delta(s,f^*).\]</span> Hence its
+shortest-path distance can be finalized.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> By the preceding inequalities, a path attaining <span class="math inline">\(D_t(f^*)\)</span> is globally shortest in <span class="math inline">\(\mathcal{P}(\mathcal{U}_t)\)</span>. In
+particular, it is shortest among the paths to its own endpoint <span class="math inline">\(f^*\)</span>, which form a subset of <span class="math inline">\(\mathcal{P}(\mathcal{U}_t)\)</span>. ◻</p>
+</div>
+<p>The solved state then grows and the unsolved endpoint set shrinks:
+<span class="math display">\[\mathcal
+S_{t+1}=\mathcal{S}_t\cup\{f^*\},\qquad
+\mathcal U_{t+1}=\mathcal{U}_t\setminus\{f^*\}.\]</span> The same
+reasoning applies at the next iteration.</p>
+<h2 id="sec:correspondence"><span class="secno">4.4</span>Correspondence with the standard
+algorithm</h2>
+<p>The three exclusions are not additional operations. They account for
+the operations already performed by the standard algorithm, as
+summarized in Table <a data-reference="tab:correspondence" data-reference-type="ref" href="#tab:correspondence">1</a>.
+Frontier restriction implements Step 1; relaxation maintains the reduced
+candidate values of Step 2; and <span class="smallcaps">Extract-Min</span> implements Step 3.</p>
+<div id="tab:correspondence">
+<table style="width:92%;">
+<caption>Table 1. Exclusion steps and corresponding operations in Dijkstra's algorithm.</caption>
+<colgroup>
+<col style="width: 24%"/>
+<col style="width: 28%"/>
+<col style="width: 39%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Exclusion step</th>
+<th style="text-align: left;">Standard operation</th>
+<th style="text-align: left;">Mathematical role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Step 1: Frontier exclusion</td>
+<td style="text-align: left;">Frontier restriction</td>
+<td style="text-align: left;">Omit paths that continue beyond their
+first unsolved vertex.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Step 2: Relaxation exclusion</td>
+<td style="text-align: left;">Relaxation of tentative distances</td>
+<td style="text-align: left;">Use optimal solved prefixes and retain the
+best candidate for each frontier endpoint.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Step 3: Global minimum</td>
+<td style="text-align: left;"><span class="smallcaps">Extract-Min</span></td>
+<td style="text-align: left;">Select the global minimum among the
+surviving candidates.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To make the correspondence between the three-step exclusion proof and
+the original algorithm more explicit, Algorithm <a data-reference="alg:standard" data-reference-type="ref" href="#alg:standard">[alg:standard]</a> presents a compact
+version of Dijkstra’s procedure, with the relevant operations annotated.
+It starts with the source <span class="math inline">\(s\)</span> in the
+solved set and immediately relaxes its outgoing edges. The first minimum
+extraction therefore uses frontier values that have already been
+computed. In later iterations, the relaxations following an extraction
+update the frontier values for the next extraction. Hence, although the
+loop places <span class="smallcaps">Extract-Min</span> before
+relaxation, the state used by each extraction already reflects Step 2.
+Step 1 is implicit in that state: an unsolved vertex not yet exposed by
+the solved set has distance label <span class="math inline">\(\infty\)</span>, so it cannot be chosen while a
+reachable frontier candidate remains.</p>
+<section class="algorithm-card" id="alg:standard"><div class="algorithm-head"><span class="overline">Algorithm 1</span><strong>Dijkstra's algorithm with the source settled initially</strong></div><div class="algo-lines">
+<div><span class="line-no">01</span><span>\(d(s)\gets 0\); \(d(v)\gets\infty\) for \(v\ne s\)</span></div>
+<div><span class="line-no">02</span><span>\(\mathcal S\gets\{s\}\); \(Q\gets V\setminus\{s\}\) (priority queue keyed by \(d\))</span></div>
+<div><span class="line-no">03</span><span><b>for</b> each \((s,v)\in E\) with \(v\in Q\) <b>do</b></span></div>
+<div class="indent"><span class="line-no">04</span><span>\(d(v)\gets\min\{d(v),w(s,v)\}\); update the key of \(v\) in \(Q\) <span class="step-tag">Step 2 · initial relaxation</span></span></div>
+<div><span class="line-no">05</span><span><b>end for</b></span></div>
+<div><span class="line-no">06</span><span><b>while</b> \(Q\ne\varnothing\) <b>do</b></span></div>
+<div class="indent"><span class="line-no">07</span><span>\(u\gets\operatorname{ExtractMin}(Q)\) <span class="step-tag blue">Step 3 · global minimum</span></span></div>
+<div class="indent"><span class="line-no">08</span><span><b>if</b> \(d(u)=\infty\) <b>then break</b></span></div>
+<div class="indent"><span class="line-no">09</span><span>\(\mathcal S\gets\mathcal S\cup\{u\}\)</span></div>
+<div class="indent"><span class="line-no">10</span><span><b>for</b> each \((u,v)\in E\) with \(v\in Q\) <b>do</b></span></div>
+<div class="indent2"><span class="line-no">11</span><span><b>if</b> \(d(u)+w(u,v)&lt;d(v)\) <b>then</b></span></div>
+<div class="indent3"><span class="line-no">12</span><span>\(d(v)\gets d(u)+w(u,v)\); update the key of \(v\) in \(Q\) <span class="step-tag">Step 2 · relaxation</span></span></div>
+<div class="indent2"><span class="line-no">13</span><span><b>end if</b></span></div>
+<div class="indent"><span class="line-no">14</span><span><b>end for</b></span></div>
+<div><span class="line-no">15</span><span><b>end while</b></span></div>
+</div><p class="algo-note">Step 1 (frontier restriction) is a maintained invariant, not an additional instruction.</p></section>
+<p>Dijkstra’s original account already uses three vertex classes and a
+sequence of candidate updates followed by minimum selection <sup class="cite">[<a class="cite-link" href="#ref-1">1</a>]</sup>. The present proof
+identifies the global path-minimization argument behind that established
+process. It is a proof of the original algorithm, not a modified
+algorithm.</p>
+<h1 id="sec:discussion"><span class="secno">5</span>Discussion: Dynamic Programming Rather Than
+Greedy Selection</h1>
+<h2 id="the-dynamic-programming-recurrence"><span class="secno">5.1</span>The dynamic-programming
+recurrence</h2>
+<p>The recursive structure follows directly from Step 2. For each
+frontier vertex <span class="math inline">\(f\)</span>, <span class="math display">\[D_t(f)=\min_{\substack{x\in\mathcal{S}_t\\(x,f)\in
+E}}
+\{d(x)+w(x,f)\}.\]</span> All distances <span class="math inline">\(d(x)\)</span> on the right are final. The global
+frontier minimum establishes one more final distance, which is then
+available in later iterations. In this way, the set of solved shortest
+paths grows through repeated applications of optimal substructure. The
+finalized distances form a nondecreasing sequence, as successive
+iterations minimize over progressively smaller sets of unsolved
+destinations.</p>
+<p>The recurrence can be compared with the familiar Fibonacci
+computation, <span class="math display">\[F_0=0,\qquad F_1=1,\qquad
+F_n=F_{n-1}+F_{n-2}.\]</span> Both procedures construct a new exact
+result from previously solved subproblems. Their dependency structures
+differ. The next Fibonacci index is fixed in advance. In Dijkstra, the
+next vertex is determined by the current frontier and its weights.
+Nevertheless, neither computation requires guessing the value of the
+next solved subproblem. This common incremental structure supports the
+dynamic-programming interpretation of Dijkstra.</p>
+<h2 id="why-the-greedy-classification-is-incorrect"><span class="secno">5.2</span>Why the greedy
+classification is incorrect</h2>
+<p>The standard greedy account emphasizes the immediate minimum-distance
+selection. The usual meaning of this account is a decision based on the
+best available local criterion, without first examining all possible
+future continuations. Kleinberg and Tardos explicitly describe the
+stepwise rule of a greedy algorithm as <em>myopic</em> <sup class="cite">[<a class="cite-link" href="#ref-4">4</a>]</sup>. Such a
+description may suggest an optimistic local choice whose success has to
+be established afterward.</p>
+<p>The textbook correctness argument commonly follows that order: select
+the minimum tentative label, then prove that its value is final for the
+selected vertex. These proofs are mathematically valid, and they use
+comparisons with paths crossing the settled boundary. Yet their stated
+target is the optimality of that particular endpoint. They do not begin
+by minimizing over the union of <em>all</em> paths ending at unsolved
+vertices. The global-to-local proof makes that stronger minimization the
+starting point of the argument.</p>
+<p>Our three exclusions establish, before finalizing the next vertex,
+that no path in the current global space is shorter than the chosen
+boundary candidate. The minimum is therefore not an optimistic,
+short-sighted, or blind local guess. It is a consequence of a complete
+and directed elimination of inferior paths. Moreover, the procedure
+relies on shortest paths already obtained and uses them to determine a
+new shortest path. We accordingly reject the greedy classification and
+identify dynamic programming as the more accurate account of Dijkstra’s
+algorithm. Its minimum-extraction operation is the final expression of
+deterministic global exclusion, not the origin of the algorithm’s
+correctness.</p>
+<h1 id="conclusion"><span class="secno">6</span>Conclusion</h1>
+<p>This paper has given a global-to-local proof of Dijkstra’s algorithm.
+Three deterministic exclusions reduce the paths to unsolved destinations
+to frontier candidates, then to one optimal candidate per frontier
+vertex, and finally to the global shortest path. Its endpoint’s
+shortest-path optimality follows directly from that global minimum.</p>
+<p>Each iteration uses previously established shortest paths to
+determine one new shortest path. This is a dynamic-programming process,
+not a speculative local greedy choice. The result places Dijkstra
+alongside Bellman–Ford and Floyd–Warshall, which are already widely
+understood as dynamic-programming shortest-path algorithms <sup class="cite">[<a class="cite-link" href="#ref-5">5</a>]</sup>. It thus provides a more
+unified conceptual classification of these major classical shortest-path
+algorithms.</p>
+<h1 class="unnumbered" id="acknowledgments">Acknowledgments</h1>
+<p>The author thanks Zimo Wang for helpful discussions that made the
+central ideas of this work clearer. The author also acknowledges the
+assistance of AI large language models, specifically Gemini and ChatGPT,
+in drafting, translation, and editorial refinement of the
+manuscript.</p>
+<section class="references" id="references"><h2 class="ref-title">References</h2><ol class="refs"><li id="ref-1">E. W. Dijkstra, “A note on two problems in connexion with graphs,”
+<em>Numerische Mathematik</em>, vol. 1, pp. 269–271, 1959.
+doi:10.1007/BF01386390.</li><li id="ref-2">R. Sedgewick and K. Wayne, <em>Algorithms</em>, 4th ed. Upper Saddle
+River, NJ: Addison-Wesley Professional, 2011.</li><li id="ref-3">G. Brassard and P. Bratley, <em>Algorithmics: Theory and
+Practice</em>. Englewood Cliffs, NJ: Prentice Hall, 1988.</li><li id="ref-4">J. Kleinberg and E. Tardos, <em>Algorithm Design</em>. Boston, MA:
+Pearson/Addison-Wesley, 2006.</li><li id="ref-5">T. H. Cormen, C. E. Leiserson, R. L. Rivest, and C. Stein,
+<em>Introduction to Algorithms</em>, 4th ed. Cambridge, MA: MIT Press,
+2022.</li><li id="ref-6">K. Wayne, “COS 423: Analysis of Algorithms—Greedy Algorithms:
+Shortest Path,” Princeton University, course materials. [Online].
+Available: <a class="uri" href="https://www.cs.princeton.edu/~wayne/cs423/">https://www.cs.princeton.edu/~wayne/cs423/</a>.</li><li id="ref-7">T. Roughgarden, <em>Algorithms Illuminated, Part 2: Graph Algorithms
+and Data Structures</em>. San Francisco, CA: Soundlikeyourself
+Publishing, LLC, 2018.</li><li id="ref-8">R. Bellman, <em>Dynamic Programming</em>. Princeton, NJ: Princeton
+University Press, 1957.</li><li id="ref-9">E. L. Lawler, <em>Combinatorial Optimization: Networks and
+Matroids</em>. New York, NY: Holt, Rinehart and Winston, 1976.</li><li id="ref-10">M. Sniedovich, “Dijkstra’s algorithm revisited: The dynamic
+programming connexion,” <em>Control and Cybernetics</em>, vol. 35,
+no. 3, pp. 599–620, 2006.</li><li id="ref-11">J. Misra, “A walk over the shortest path: Dijkstra’s algorithm viewed
+as fixed-point computation,” <em>Information Processing Letters</em>,
+vol. 77, nos. 2–4, pp. 197–200, 2001.
+doi:10.1016/S0020-0190(00)00202-7.</li><li id="ref-12">A. Lew, “Canonical greedy algorithms and dynamic programming,”
+<em>Control and Cybernetics</em>, vol. 35, no. 3, pp. 621–643, 2006.</li></ol></section>
+</main></div>
+<footer class="footer"><span>© Shengbao Wang · Hangzhou Normal University</span><span>English edition · <a href="index.html">阅读中文版</a> · v11</span></footer>
+<button id="scrolltop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="返回顶部">↑</button>
+<script>
+const links=[...document.querySelectorAll('.toc-link')];const sections=[...document.querySelectorAll('.paper h1,.paper h2')];const progress=document.querySelector('#progress');const up=document.querySelector('#scrolltop');const update=()=>{let max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?100*scrollY/max:0)+'%';up.style.display=scrollY>650?'block':'none';let current=null;for(let s of sections)if(s.getBoundingClientRect().top<145)current=s.id;if(current)for(let a of links)a.classList.toggle('active',a.getAttribute('href')==='#'+current)};window.addEventListener('scroll',update,{passive:true});update();const togg=document.getElementById('menu-toggle');const mobile=document.getElementById('mobile-panel');togg.onclick=()=>{let open=mobile.classList.toggle('open');togg.setAttribute('aria-expanded',String(open))};mobile.addEventListener('click',e=>{if(e.target.closest('a')){mobile.classList.remove('open');togg.setAttribute('aria-expanded','false')}});
+</script></body></html>
