@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Dijkstra 不是贪心算法 | 王圣宝 · 杭州师范大学 | 中文全文</title>
+<meta content="王圣宝（杭州师范大学）：Dijkstra 不是贪心算法，论文 v14 中文全文，包含三步排除证明、图示、伪代码及参考文献。" name="description"/>
+<meta content="#f7f8f6" name="theme-color"/><meta content="article" property="og:type"/><meta content="Dijkstra 不是贪心算法：一种从全局到局部的正确性证明" property="og:title"/><meta content="全文阅读：通过前沿排除、松弛与全局最小值提取，重新理解 Dijkstra 的正确性。" property="og:description"/>
+<style>
+:root{--bg:#f7f8f6;--paper:#fff;--text:#24303d;--muted:#657382;--line:#dfe6e8;--main:#174e48;--soft:#e7f3ed;--gold:#b27d2b;--shade:#f2f5f7;--radius:16px;color-scheme:light}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;color:var(--text);background:var(--bg);line-height:1.9;letter-spacing:.008em}a{color:var(--main);text-decoration:none}a:hover{text-decoration:underline}button{cursor:pointer;font:inherit}#progress{height:3px;background:var(--gold);width:0;position:fixed;top:0;left:0;z-index:50}.topbar{height:64px;position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 clamp(18px,4vw,50px);background:rgba(247,248,246,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.logo{display:flex;align-items:center;gap:10px;font-weight:780;color:var(--text);letter-spacing:-.02em}.logo-symbol{display:inline-flex;border:2px solid var(--main);border-radius:9px;padding:1px 7px;color:var(--main);font-size:18px}.top-actions{display:flex;gap:8px;align-items:center}.action{border:1px solid var(--line);background:var(--paper);border-radius:9px;padding:7px 12px;font-size:13px;color:var(--text);font-weight:650}.action.primary{background:var(--main);color:#fff;border-color:var(--main)}.hero{max-width:1180px;margin:0 auto;padding:64px 25px 45px}.eyebrow{text-transform:uppercase;letter-spacing:.19em;color:var(--gold);font-size:12px;font-weight:800;margin:0 0 22px}.hero h1{font-size:clamp(34px,4.1vw,58px);line-height:1.27;margin:0;letter-spacing:-.045em;max-width:950px;color:#183e39;font-weight:850}.hero .english{font-family:Georgia,serif;color:var(--muted);font-size:clamp(15px,1.6vw,20px);line-height:1.5;margin-top:15px;max-width:900px}.byline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:28px;color:var(--muted);font-size:14px}.dot{width:3px;height:3px;background:#a3b0b7;border-radius:50%}.reading-layout{max-width:1180px;padding:0 25px;margin:0 auto;display:grid;grid-template-columns:245px minmax(0,1fr);gap:36px;align-items:start}.sidebar{position:sticky;top:86px;align-self:start;max-height:calc(100vh - 114px);overflow:auto;padding:8px 8px 18px 0}.sidebar strong{font-size:12px;letter-spacing:.08em;color:var(--muted);display:block;margin:4px 14px 15px}.toc-link{display:flex;align-items:baseline;gap:10px;padding:7px 10px;margin:2px 0;border-radius:9px;font-size:13px;line-height:1.4;color:#4d6170}.toc-link:hover{background:#edf2ef;text-decoration:none}.toc-link.active{background:var(--soft);color:var(--main);font-weight:750}.toc-link.sub{padding-left:24px;font-size:12.5px}.toc-no{min-width:22px;font-variant-numeric:tabular-nums;color:#8a999c}.paper{background:var(--paper);border:1px solid var(--line);box-shadow:0 20px 55px rgba(40,59,68,.055);border-radius:var(--radius);padding:clamp(22px,4vw,54px);min-width:0}.article-heading{font-size:19px;font-weight:800;margin:0 0 15px;color:var(--main)}.abstract{padding:25px 28px;background:#f1f7f4;border-left:4px solid #558b72;border-radius:0 12px 12px 0;margin-bottom:48px;font-size:15px}.abstract p{margin:0}.paper h1{font-size:26px;line-height:1.35;color:#203a38;margin:45px 0 20px;border-bottom:1px solid var(--line);padding-bottom:12px;letter-spacing:-.02em}.paper h2{font-size:19px;line-height:1.45;margin:31px 0 14px;color:#254e4a;letter-spacing:-.01em}.paper h1:first-of-type{margin-top:0}.secno{display:inline-block;font-size:.78em;margin-right:14px;color:#a37b40;font-weight:800}.paper p{font-size:15.25px;margin:0 0 16px;text-align:justify;overflow-wrap:anywhere}.paper em{font-style:normal;font-weight:660;color:#1a584c}.paper .math.display{display:block;text-align:center;overflow-x:auto;overflow-y:hidden;padding:4px 0;margin:19px 0 22px}.paper .math.inline{white-space:normal}.paper figure{margin:25px 0 30px}.figure-art{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fbfcfb;padding:6px}.figure-art svg{display:block;width:100%;height:auto;min-width:620px}.paper figcaption{color:var(--muted);font-size:13px;line-height:1.65;text-align:center;margin-top:9px}.lemma,.theorem,.proof{margin:18px 0 20px;padding:18px 20px;border-left:3px solid #6c9986;background:#f7faf8;border-radius:0 10px 10px 0}.theorem{border-left-color:#bd8b40;background:#fffaf2}.proof{border-left-color:#9aabb3;background:#f8fafb}.lemma p,.theorem p,.proof p{font-size:14.4px}.paper table{width:100%;border-collapse:collapse;margin:15px 0 22px;font-size:13.5px;line-height:1.65}.paper table caption{font-size:13.5px;font-weight:680;margin-bottom:10px;color:var(--muted)}.paper th{text-align:left;color:var(--main);background:#f1f6f4}.paper td,.paper th{padding:11px;border-bottom:1px solid var(--line);vertical-align:top}.algorithm-card{margin:27px 0;border:1px solid #cddbd7;border-radius:14px;overflow:hidden}.algorithm-head{background:#edf5f1;padding:15px 20px;display:flex;align-items:center;gap:13px;flex-wrap:wrap;color:var(--main)}.overline{text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:#788f86;font-weight:800}.algo-lines{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.7px;line-height:2.25;overflow-x:auto;padding:13px 10px;white-space:nowrap}.algo-lines>div{display:flex;min-width:max-content;padding:0 9px;border-radius:5px}.algo-lines>div:nth-child(2n){background:#f8fafb}.algo-lines .line-no{display:inline-block;color:#a2afb4;min-width:40px;user-select:none}.algo-lines .indent>span:nth-child(2){padding-left:20px}.algo-lines .indent2>span:nth-child(2){padding-left:40px}.algo-lines .indent3>span:nth-child(2){padding-left:60px}.step-tag{font-family:ui-sans-serif,sans-serif;margin-left:12px;background:#e4f1e9;color:#2e6858;border-radius:5px;padding:3px 7px;font-size:11px;font-weight:750}.step-tag.blue{background:#e8effa;color:#38699a}.algo-note{padding:0 20px 14px;color:var(--muted);font-size:12.5px!important;text-align:left!important}.cite{font-size:.72em;vertical-align:super;white-space:nowrap}.cite-link{font-weight:650}.refs{padding-left:30px;margin-top:20px}.refs li{font-size:13.2px;line-height:1.65;margin-bottom:10px;padding-left:8px;overflow-wrap:anywhere}.references{border-top:1px solid var(--line);padding-top:15px;margin-top:40px}.ref-title{margin-top:0!important}.footer{margin:55px auto 40px;max-width:1120px;padding:20px 25px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line)}#scrolltop{position:fixed;right:22px;bottom:22px;border:1px solid #c9d7d0;background:#fff;border-radius:50%;width:42px;height:42px;box-shadow:0 6px 18px #24303d14;display:none;color:var(--main)}#menu-toggle{display:none}.mobile-panel{display:none}@media(max-width:940px){.reading-layout{display:block;max-width:810px}.sidebar{display:none}.hero{max-width:810px;padding:45px 20px 30px}.reading-layout{padding:0 12px}.paper{padding:28px}.topbar{padding:0 16px}.mobile-panel.open{display:block;position:fixed;top:64px;right:0;left:0;z-index:35;background:#fff;border-bottom:1px solid var(--line);padding:14px 25px;max-height:70vh;overflow:auto;box-shadow:0 15px 35px #172d251d}.mobile-panel .toc-link{font-size:14px}.mobile-panel .toc-link.sub{font-size:13px}#menu-toggle{display:block}}@media(max-width:600px){.hero h1{font-size:32px}.hero{padding:35px 20px 24px}.hero .english{font-size:15px}.top-actions .print{display:none}.paper{padding:22px 16px}.paper h1{font-size:23px}.paper h2{font-size:18px}.abstract{padding:20px 17px}.paper p{font-size:14.6px}.paper td,.paper th{font-size:12px;padding:7px}.footer{display:block}.byline{font-size:12px}}@media print{.topbar,.sidebar,.mobile-panel,.footer,#progress,#scrolltop{display:none!important}.hero{padding:0 10px 20px}.hero h1{font-size:26px}.reading-layout{display:block;padding:0}.paper{box-shadow:none;border:0;padding:0}.figure-art svg{min-width:0}.paper h1,.paper h2{break-after:avoid}.algorithm-card,.paper figure{break-inside:avoid}.paper{font-size:12px}body{background:white}}
+
+/* Bilingual navigation */
+.lang-switch{display:inline-flex;border:1px solid #cbd9d2;background:#eaf2ee;border-radius:9px;padding:3px;gap:2px;white-space:nowrap}
+.lang-switch a{font-size:12px;line-height:1.4;padding:5px 10px;border-radius:6px;font-weight:750;color:#46645a;text-decoration:none}
+.lang-switch a[aria-current="page"]{background:var(--main);color:#fff;box-shadow:0 1px 3px #224c3d30}
+.lang-switch a:hover:not([aria-current="page"]){background:#dbeae2}
+.byline strong{color:#253d39}.article-callout{padding:12px 17px;background:#f3f8f5;border:1px solid #d7e6dc;border-radius:10px;margin-top:22px;font-size:13px;color:#527366}
+@media(max-width:600px){.lang-switch a{padding:5px 8px}.top-actions{gap:5px}.action{padding:7px 9px;font-size:12px}.logo span:last-child{font-size:13px}.hero .byline{gap:8px}}
+</style>
+<script>window.MathJax={tex:{inlineMath:[["\\(","\\)"],["$","$"]],displayMath:[["\\[","\\]"],["$$","$$"]],processEscapes:true},options:{skipHtmlTags:['script','style','textarea','pre','code']},svg:{fontCache:'global'}};</script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link href="zh.html" hreflang="zh-CN" rel="alternate"/><link href="en.html" hreflang="en" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/></head><body>
+<div id="progress"></div><header class="topbar"><div class="logo"><span class="logo-symbol">D</span><span>Global → Local</span></div><div class="top-actions"><nav aria-label="Language / 语言" class="lang-switch"><a aria-current="page" href="zh.html" hreflang="zh-CN" lang="zh-CN">中文</a><a href="en.html" hreflang="en" lang="en">EN</a></nav><a class="action" download="" href="paper-zh.pdf">下载 PDF</a><button class="action print" onclick="window.print()">打印</button><button aria-controls="mobile-panel" aria-expanded="false" class="action" id="menu-toggle">目录 ☰</button></div></header>
+<div class="mobile-panel" id="mobile-panel"><strong>章节导航</strong><a class="toc-link top" href="#introduction"><span class="toc-no">1</span><span>引言</span></a><a class="toc-link top" href="#sec:prelim"><span class="toc-no">2</span><span>预备知识</span></a><a class="toc-link sub" href="#section-2-1"><span class="toc-no">2.1</span><span>三个顶点集合</span></a><a class="toc-link sub" href="#section-2-2"><span class="toc-no">2.2</span><span>一个启发性的起步</span></a><a class="toc-link top" href="#sec:principle"><span class="toc-no">3</span><span>基于三步排除的全局到局部证明</span></a><a class="toc-link sub" href="#section-3-1"><span class="toc-no">3.1</span><span>全局路径最小化</span></a><a class="toc-link sub" href="#section-3-2"><span class="toc-no">3.2</span><span>三步排除正确性证明</span></a><a class="toc-link sub" href="#section-3-3"><span class="toc-no">3.3</span><span>与标准 Dijkstra 算法的对应</span></a><a class="toc-link top" href="#sec:discussion"><span class="toc-no">4</span><span>讨论：动态规划而非贪心选择</span></a><a class="toc-link sub" href="#section-4-1"><span class="toc-no">4.1</span><span>动态规划递推</span></a><a class="toc-link sub" href="#section-4-2"><span class="toc-no">4.2</span><span>为什么贪心分类不正确</span></a><a class="toc-link top" href="#conclusion"><span class="toc-no">5</span><span>结论</span></a></div>
+<section class="hero"><p class="eyebrow">算法研究 · 中文全文 · English available</p><h1>Dijkstra 不是贪心算法：<br/>一种从全局到局部的正确性证明</h1><p class="english">Dijkstra Is NOT Greedy: A Global-to-Local Proof of Correctness</p><div class="byline"><strong>王圣宝</strong><span class="dot"></span><span>杭州师范大学</span><span class="dot"></span><span>论文 v14 · 中文全文</span></div></section>
+<div class="reading-layout"><nav aria-label="论文目录" class="sidebar"><strong>CONTENTS / 目录</strong><a class="toc-link top" href="#introduction"><span class="toc-no">1</span><span>引言</span></a><a class="toc-link top" href="#sec:prelim"><span class="toc-no">2</span><span>预备知识</span></a><a class="toc-link sub" href="#section-2-1"><span class="toc-no">2.1</span><span>三个顶点集合</span></a><a class="toc-link sub" href="#section-2-2"><span class="toc-no">2.2</span><span>一个启发性的起步</span></a><a class="toc-link top" href="#sec:principle"><span class="toc-no">3</span><span>基于三步排除的全局到局部证明</span></a><a class="toc-link sub" href="#section-3-1"><span class="toc-no">3.1</span><span>全局路径最小化</span></a><a class="toc-link sub" href="#section-3-2"><span class="toc-no">3.2</span><span>三步排除正确性证明</span></a><a class="toc-link sub" href="#section-3-3"><span class="toc-no">3.3</span><span>与标准 Dijkstra 算法的对应</span></a><a class="toc-link top" href="#sec:discussion"><span class="toc-no">4</span><span>讨论：动态规划而非贪心选择</span></a><a class="toc-link sub" href="#section-4-1"><span class="toc-no">4.1</span><span>动态规划递推</span></a><a class="toc-link sub" href="#section-4-2"><span class="toc-no">4.2</span><span>为什么贪心分类不正确</span></a><a class="toc-link top" href="#conclusion"><span class="toc-no">5</span><span>结论</span></a></nav>
+<main class="paper" id="main"><div class="abstract"><h2 class="article-heading">摘要</h2><p>Dijkstra
+算法历来被归类为贪心算法。本文认为，这种分类未能准确揭示算法确定最短路径的内在机制。我们给出一种直接的、从全局到局部的正确性证明。每一轮迭代中，算法实际上从所有终点尚未解决的路径中确定一条全局最短路径。该路径自然也是通向自身终点的最短路径。更根本的是，算法利用已经确定的最短路径，在每一轮中求出一条新的最短路径。本文将这一过程理解为动态规划。我们通过三步排除证明，说明如何将完整路径空间压缩为前沿候选，如何利用松弛操作排除较长路径，以及为什么最小值提取能够确定全局最小值。因此，算法的选择来自确定性的全局比较，而非乐观的局部贪心选择。我们认为，与传统贪心分类相比，动态规划与确定性路径排除更准确地揭示了
+Dijkstra 算法的本质。</p>
+</div>
+<h1 data-number="1" id="introduction"><span class="secno">1</span>引言</h1>
+<p>自 Dijkstra 于 1959 年提出这一优雅的最短路径算法以来<sup class="cite">[<a class="cite-link" href="#ref-1">1</a>]</sup>，它已成为计算机科学领域最著名的算法之一。该算法具有重要的实际用途，例如地图导航中的路径规划，以及通信网络中的路由计算<sup class="cite">[<a class="cite-link" href="#ref-2">2</a>]</sup>。与此同时，它长期被视为典型的贪心算法。经典教材普遍采用这一分类<sup class="cite">[<a class="cite-link" href="#ref-3">3</a>, <a class="cite-link" href="#ref-4">4</a>, <a class="cite-link" href="#ref-5">5</a>]</sup>。Kleinberg
+和 Tardos 使用
+<em>myopically</em>（短视地）描述逐步进行的贪心决策。Cormen
+等人认为，Dijkstra
+每轮选择暂定距离最小的未解决顶点，因此采用了贪心策略；随后再证明所选顶点的距离已经达到最终最优值。Sedgewick
+和 Wayne
+也采用选取最小距离与松弛相结合的描述，普林斯顿大学的相关课程同样将最短路径问题列入贪心算法的教学内容<sup class="cite">[<a class="cite-link" href="#ref-2">2</a>, <a class="cite-link" href="#ref-6">6</a>]</sup>。Roughgarden
+给出了一个特别清晰的例子：先选择一个边界上的最小候选，再证明这一候选对于所选终点是最优的<sup class="cite">[<a class="cite-link" href="#ref-7">7</a>]</sup>。</p>
+<p>上述证明是严谨的，而且也利用了路径首次跨越已解决集合边界的性质。不过，它们主要证明<em>被选中终点</em>的最短距离已经确定。证明通常先给出选择规则，再说明该选择为何正确。这种组织方式容易使人将算法理解为：先执行局部贪心选择，再证明它是安全的。但它没有直接揭示一个更强的事实：被选中的候选实际上是<em>所有终点尚未解决的路径</em>中的全局最小值。</p>
+<p>关于 Dijkstra
+算法，也出现过不同于常规贪心叙述的解释。借助动态规划中熟知的最优子结构思想<sup class="cite">[<a class="cite-link" href="#ref-8">8</a>, <a class="cite-link" href="#ref-9">9</a>]</sup>，Sniedovich
+强调 Dijkstra 的动态规划性质；Misra 则从不动点计算出发推导该算法<sup class="cite">[<a class="cite-link" href="#ref-10">10</a>, <a class="cite-link" href="#ref-11">11</a>]</sup>。不过，Sniedovich
+仍沿用对算法“贪心选择规则”的描述；Lew
+在讨论动态规划与贪心算法的联系时，也继续将 Dijkstra 作为贪心算法<sup class="cite">[<a class="cite-link" href="#ref-12">12</a>]</sup>。这些工作没有从所有未解决终点路径的全局最小化出发，依据贪心策略的基本含义否定这一分类，更没有给出本文的全局到局部三步排除证明。</p>
+<p>本文从这个全局路径空间出发，证明每一轮迭代确实找到了其中的绝对最短路径。由此，该路径终点的最短路径性质自然成立。为说明这一点，我们提出三步排除证明：首先将搜索限制在前沿；其次利用最优子结构与松弛操作，为每个前沿顶点保留最佳候选；最后从剩余候选中确定全局最小值。这三种排除恰好对应
+Dijkstra 算法本身的主要操作。</p>
+<p>这种解释改变了传统论证的逻辑方向。算法并非相信某个局部上看似有利的选择，随后才获得全局结论；相反，确定性的排除过程先确立全局最小值，再将其终点标记为已解决。每一轮都利用既有最短路径推出一条新的最短路径。因此，本文主张
+Dijkstra
+本质上是一种动态规划算法，将其归类为贪心算法并不准确。这一判断针对的是最小值选择的数学依据，而非否定已有正确性证明的有效性。</p>
+<h1 data-number="2" id="sec:prelim"><span class="secno">2</span>预备知识</h1>
+<p>设 <span class="math inline">\(G=(V,E,w)\)</span>
+是一个有限的带权有向图，源点为 <span class="math inline">\(s\in
+V\)</span>。为使排除论证更清晰，本文统一假定各条边的权重严格为正： <span class="math display">\[w(e)&gt;0\qquad(e\in E).\]</span>
+严格正权保证路径每次继续延伸都会变长。Dijkstra
+算法同样适用于零权边：此时路径延伸后虽可能不变长，但不会变短，前沿候选仍能达到当前全局最小值。最短路径上可能出现距离相等的顶点，因此不再保证其顶点严格按照前缀顺序解决。负权边则可能破坏这一论证。本文仍采用严格正权假设，以简化比较。</p>
+<p>本文的路径指顶点序列 <span class="math inline">\(P=(s=v_0,v_1,\ldots,v_k=v)\)</span>，起点固定为源点
+<span class="math inline">\(s\)</span>，<span class="math inline">\(v_1,\ldots,v_{k-1}\)</span> 为中间途经顶点，<span class="math inline">\(v\)</span>
+为终点。以下只考虑<em>简单路径</em>，即没有重复顶点的路径。在正权条件下，删除游走中的回路会严格缩短路径，因此这种限定不会遗漏任何最短路径。记路径的边权和为
+<span class="math inline">\(w(P)\)</span>；对于从 <span class="math inline">\(s\)</span> 可达的顶点 <span class="math inline">\(v\)</span>，用 <span class="math inline">\(\delta(s,v)\)</span>
+表示最短路径距离。不可达顶点不参与下面的有限距离最小化；若不存在可达的未解决顶点，算法即终止。</p>
+<h2 data-number="2.1" id="section-2-1"><span class="secno">2.1</span>三个顶点集合</h2>
+<p>Dijkstra 在其 1959 年原始论文的 Problem 2 中，已经将顶点分为三类<sup class="cite">[<a class="cite-link" href="#ref-1">1</a>]</sup>：集合 A
+为最短路径已经确定的顶点；集合 B 为与 A 直接相连的其余顶点，下一个顶点从
+B 中选出；集合 C
+包含所有剩余顶点。本文沿用这一三区域结构，但采用更便于证明的记号。</p>
+<p>在第 <span class="math inline">\(t\)</span> 轮迭代中，设 <span class="math inline">\(\mathcal S_t\)</span>
+为<em>已解决集合</em>，其中各顶点满足 <span class="math display">\[d(x)=\delta(s,x)\qquad(x\in\mathcal
+S_t),\]</span> 并设 <span class="math inline">\(\mathcal
+U_t=V\setminus\mathcal S_t\)</span> 为<em>未解决集合</em>。初始时，<span class="math inline">\(\mathcal S_t=\{s\}\)</span>，且 <span class="math inline">\(d(s)=0\)</span>。在 <span class="math inline">\(\mathcal U_t\)</span> 内进一步定义 <span class="math display">\[\mathcal F_t=\{f\in\mathcal U_t:\exists
+x\in\mathcal S_t\text{ 使得 }(x,f)\in E\}\]</span>
+为<em>前沿集合</em>（frontier）；设 <span class="math inline">\(\mathcal
+I_t=\mathcal U_t\setminus\mathcal F_t\)</span>
+为<em>不可见集合</em>（invisible set）。因而 <span class="math display">\[V=\mathcal S_t\;\dot\cup\;\mathcal U_t,\qquad
+\mathcal U_t=\mathcal F_t\;\dot\cup\;\mathcal I_t.\]</span>
+这里“不可见”仅表示相关顶点尚未通过一条从已解决区域向外的边直接暴露。图 <a href="#fig:spatial">1</a>
+用本文符号展示了 Dijkstra
+原文已有的三个区域。对于有向图，前沿由<em>从已解决集合指向外部</em>的边确定。</p>
+<figure id="fig:spatial"><div class="figure-art"><svg aria-labelledby="fig-title fig-desc" height="432" role="img" viewbox="0 0 940 432" width="940" xmlns="http://www.w3.org/2000/svg">
+<title id="fig-title">已解决、前沿与不可见集合的三分区关系</title><desc id="fig-desc">外层 V 由 S_t 与 U_t 构成，U_t 进一步分成 F_t 与 I_t。所有从 S_t 出发进入 U_t 的路径首先经过 F_t，进入 I_t 的路径需要继续延伸。</desc>
+<defs><marker id="arrow" markerheight="7" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0 0 L7 3.5 L0 7 z" fill="#617489"></path></marker><marker id="arrowGold" markerheight="7" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0 0 L7 3.5 L0 7 z" fill="#c08b35"></path></marker></defs>
+<rect fill="#fafbf9" height="405" rx="22" stroke="#9eafb7" stroke-width="1.5" width="916" x="12" y="12"></rect><text class="label" fill="#243a4a" font-size="20" x="35" y="43">V</text>
+<rect fill="#e7f3ed" height="298" rx="18" stroke="#7da792" stroke-width="2" width="316" x="40" y="69"></rect><text fill="#205c42" font-size="18" font-weight="700" text-anchor="middle" x="196" y="100">𝓢ₜ · 已解决集合</text>
+<rect fill="#f0f4f8" height="298" rx="18" stroke="#93a7b8" stroke-width="2" width="512" x="385" y="69"></rect><text fill="#364d65" font-size="18" font-weight="700" text-anchor="middle" x="641" y="100">𝓤ₜ · 未解决集合</text>
+<rect fill="#fff2da" height="212" rx="16" stroke="#d5ac6b" stroke-dasharray="7 5" stroke-width="2" width="192" x="408" y="123"></rect><text fill="#8c5e13" font-size="18" font-weight="700" text-anchor="middle" x="504" y="151">𝓕ₜ · 前沿集合</text>
+<rect fill="#e8eef6" height="212" rx="16" stroke="#93afcc" stroke-dasharray="7 5" stroke-width="2" width="249" x="621" y="123"></rect><text fill="#3d6289" font-size="18" font-weight="700" text-anchor="middle" x="745" y="151">𝓘ₜ · 不可见集合</text>
+<line stroke="#b27441" stroke-dasharray="4 6" stroke-width="2" x1="369" x2="369" y1="59" y2="384"></line><text fill="#866047" font-size="13" text-anchor="middle" x="369" y="398">首次进入边界</text>
+<g fill="none" marker-end="url(#arrow)" stroke="#617489" stroke-width="2.6"><path d="M110 234 L194 179"></path><path d="M110 234 L189 297"></path><path d="M203 180 L288 234"></path><path d="M204 297 L288 236"></path><path d="M532 200 L677 204"></path><path d="M532 280 L717 280"></path><path d="M677 204 L783 234"></path><path d="M715 277 L790 237"></path></g>
+<g fill="none" marker-end="url(#arrowGold)" stroke="#c08b35" stroke-width="3.5"><path d="M301 230 L473 199"></path><path d="M202 294 L474 279"></path></g>
+<g font-family="Arial, sans-serif" font-size="15" font-weight="700" text-anchor="middle"><circle cx="108" cy="235" fill="#fff" r="19" stroke="#529476" stroke-width="2"></circle><text fill="#24563d" x="108" y="240">s</text><circle cx="195" cy="177" fill="#fff" r="17" stroke="#529476" stroke-width="2"></circle><text x="195" y="182">a</text><circle cx="196" cy="299" fill="#fff" r="17" stroke="#529476" stroke-width="2"></circle><text x="196" y="304">b</text><circle cx="290" cy="234" fill="#fff" r="17" stroke="#529476" stroke-width="2"></circle><text x="290" y="239">x</text><circle cx="493" cy="195" fill="#fff" r="17" stroke="#c08b35" stroke-width="2"></circle><text x="493" y="200">f₁</text><circle cx="492" cy="278" fill="#fff" r="17" stroke="#c08b35" stroke-width="2"></circle><text x="492" y="283">f₂</text><circle cx="678" cy="201" fill="#fff" r="17" stroke="#819fc2" stroke-width="2"></circle><text x="678" y="206">u₁</text><circle cx="718" cy="278" fill="#fff" r="17" stroke="#819fc2" stroke-width="2"></circle><text x="718" y="283">u₂</text><circle cx="794" cy="232" fill="#fff" r="17" stroke="#819fc2" stroke-width="2"></circle><text x="794" y="237">u₃</text></g>
+<rect fill="#fff" height="39" rx="11" stroke="#d2dbe2" width="270" x="608" y="345"></rect><text fill="#52677b" font-size="14" text-anchor="middle" x="743" y="369">继续深入的路径必经过前沿</text>
+</svg></div><figcaption>图 1　Dijkstra 算法第 t 轮的三区域划分：已解决、前沿与不可见集合。正权条件下，路径越过首次未解决顶点继续延伸，就会比首次进入前沿的前缀更长。</figcaption></figure>
+<h2 data-number="2.2" id="section-2-2"><span class="secno">2.2</span>一个启发性的起步</h2>
+<p>源点 <span class="math inline">\(s\)</span> 的最短距离显然为 <span class="math inline">\(\delta(s,s)=0\)</span>，因为存在长度为零的平凡路径。这只是已知的初始条件，并非一次需要求解的最短路径搜索。Dijkstra
+算法的第一次实际求解，是确定到某个其他顶点的最短路径。根据最小暂定距离选择规则，很容易看出：该顶点就是
+<span class="math inline">\(s\)</span>
+指向其他顶点的最小权重出边所指向的顶点。若存在从 <span class="math inline">\(s\)</span> 可达的其他顶点，记 <span class="math display">\[m=\min_{\substack{(s,v)\in E\\v\ne
+s}}w(s,v).\]</span> 这样的单边路径长度为 <span class="math inline">\(m\)</span>。任何从 <span class="math inline">\(s\)</span>
+到其他顶点、至少包含两条边的简单路径，其第一条边的权重不小于 <span class="math inline">\(m\)</span>，之后还要增加正权边。所以，最小权重出边对应的路径不仅是到自身终点的最短路径，而且是<em>所有从
+<span class="math inline">\(s\)</span>
+出发、终点为其他顶点的路径中的绝对最短路径</em>。</p>
+<p>其道理非常简单：<em>路径增加边，就会变长。</em>
+这便引出了本文的核心问题：<em>后续每一轮是否同样能从所有终点尚未解决的路径中确定一条绝对最短路径？</em>
+下面的全局到局部证明给出肯定回答。</p>
+<h1 data-number="3" id="sec:principle"><span class="secno">3</span>基于三步排除的全局到局部证明</h1>
+<p><span id="sec:proof" label="sec:proof"></span></p>
+<h2 data-number="3.1" id="section-3-1"><span class="secno">3.1</span>全局路径最小化</h2>
+<p>对于每个 <span class="math inline">\(u\in\mathcal U_t\)</span>，记
+<span class="math inline">\(\mathcal P(s,u)\)</span> 为从 <span class="math inline">\(s\)</span> 到 <span class="math inline">\(u\)</span> 的路径集合。定义第 <span class="math inline">\(t\)</span> 轮的全局待解路径空间为 <span class="math display">\[\mathcal P(\mathcal U_t)=\bigcup_{u\in\mathcal
+U_t}\mathcal P(s,u).\]</span> 当前轮的目标是确定 <span class="math display">\[P_t^*\in\arg\min_{P\in\mathcal P(\mathcal
+U_t)}w(P).\]</span>
+这里是在<em>所有终点尚未解决的路径</em>中取最小值，而不是先假定各未解决顶点的最短路径已经求出，再对它们进行比较。</p>
+<p class="minor-heading"><strong>3.1.0.1 从全局最小值推出局部最短路径。</strong></p>
+<p>设 <span class="math inline">\(P_t^*\)</span> 的终点为 <span class="math inline">\(u^*\)</span>。因为 <span class="math display">\[\mathcal P(s,u^*)\subseteq\mathcal P(\mathcal
+U_t),\]</span> 所以任意从 <span class="math inline">\(s\)</span> 到
+<span class="math inline">\(u^*\)</span> 的路径 <span class="math inline">\(Q\)</span> 均满足 <span class="math display">\[w(P_t^*)\le w(Q).\]</span>
+因此，一条路径若在全局待解路径空间中取得最小值，它必然也在自身终点对应的路径集合中取得最小值。<em>每次找到一条全局最短路径，就解决了一个新的顶点。</em>
+剩下的问题是：Dijkstra
+如何在不枚举所有路径的情况下确定这个全局最小值？</p>
+<p class="minor-heading"><strong>3.1.0.2 排除原则。</strong></p>
+<p>为了寻找最短路径，可以排除那些已经确定比其他有效候选更长的路径。若
+<span class="math inline">\(P_1\)</span> 仍然有效且 <span class="math inline">\(w(P_1)&lt;w(P_2)\)</span>，则 <span class="math inline">\(P_2\)</span>
+不可能取得当前最小值。即使边权严格为正，最短路径也未必唯一。本文所说的“一条全局最短路径”，指任意一个最小值实现者；如果存在多个等长的最优候选（路径终点相同或者不同），任取其中一条即可，最短距离不受影响。</p>
+<p>这里的排除只针对<em>当前这一轮</em>。一条路径在进入第一个未解决顶点后继续延伸，可能与当前全局最小值无关；但当该顶点被解决后，其后续边又可能成为重要候选。下面的证明利用这一区别缩小当前搜索空间，并不会丢失未来可能需要的最短路径。</p>
+<h2 data-number="3.2" id="section-3-2"><span class="secno">3.2</span>三步排除正确性证明</h2>
+<p>固定第 <span class="math inline">\(t\)</span>
+轮，假设存在至少一个可达的前沿顶点。对于 <span class="math inline">\(x\in\mathcal S_t\)</span>，最短距离 <span class="math inline">\(d(x)=\delta(s,x)\)</span>
+已经确定。下面证明下一次最小值提取能够得到 <span class="math inline">\(\mathcal P(\mathcal U_t)\)</span>
+中的全局最小值。</p>
+<p class="minor-heading"><strong>3.2.0.1 第一步：前沿排除。</strong></p>
+<p>任取 <span class="math display">\[P=(s=v_0,v_1,\ldots,v_k=u)\in\mathcal P(\mathcal
+U_t).\]</span> 设 <span class="math inline">\(v_j\)</span> 为 <span class="math inline">\(P\)</span> 上第一个未解决顶点。由于 <span class="math inline">\(v_0=s\in\mathcal S_t\)</span>，其前驱 <span class="math inline">\(v_{j-1}\)</span> 必然属于 <span class="math inline">\(\mathcal S_t\)</span>。又因为 <span class="math inline">\((v_{j-1},v_j)\in
+E\)</span>，按照前沿集合的定义，有 <span class="math inline">\(v_j\in\mathcal F_t\)</span>。以 <span class="math inline">\(v_j\)</span> 为终点的前缀 <span class="math inline">\(P^{\mathrm{first}}=(v_0,\ldots,v_j)\)</span>
+同样属于 <span class="math inline">\(\mathcal P(\mathcal
+U_t)\)</span>。如果 <span class="math inline">\(P\)</span> 还要越过
+<span class="math inline">\(v_j\)</span>，它至少会增加一条正权边，因此
+<span class="math display">\[w(P^{\mathrm{first}})&lt;w(P).\]</span>
+可见，包含两个及以上未解决顶点的路径不可能是当前全局最短路径，因为它截至第一个前沿顶点的前缀已经更短。于是本轮只需考虑
+<span class="math display">\[s\rightsquigarrow x\to f,
+  \qquad x\in\mathcal S_t,\quad f\in\mathcal F_t,\]</span>
+且所有中间顶点属于已解决集合，唯一的未解决顶点是终点 <span class="math inline">\(f\)</span>。这说明为什么当前只需考虑前沿顶点，无须进一步探索深层未解决路径。这里的排除是相对于该路径自身更短的首次跨界前缀而言；被暂时排除的路径，并不需要长于所有其他保留的前沿候选。</p>
+<p class="minor-heading"><strong>3.2.0.2 第二步：松弛排除。</strong></p>
+<p>固定 <span class="math inline">\(f\in\mathcal
+F_t\)</span>。第一步之后保留的每条候选路径均有形式 <span class="math display">\[P=Q(s,x)\circ(x,f),\qquad x\in\mathcal
+S_t.\]</span> 首先考察到 <span class="math inline">\(x\)</span>
+的前缀。由于 <span class="math inline">\(x\)</span> 已经解决，任意前缀
+<span class="math inline">\(Q(s,x)\)</span> 的长度不可能小于 <span class="math inline">\(d(x)=\delta(s,x)\)</span>。若它更长，则用已知最短前缀替换后可以构成一条更短的到
+<span class="math inline">\(f\)</span> 候选路径。所以，对每条跨界边
+<span class="math inline">\((x,f)\)</span>，只需保留候选值 <span class="math display">\[d(x)+w(x,f).\]</span>
+这就是最优子结构所发挥的作用：松弛操作直接利用已经确定的最短距离，而不必枚举此前通向
+<span class="math inline">\(x\)</span> 的各种路径。</p>
+<p>同一个前沿顶点 <span class="math inline">\(f\)</span>
+可能具有多个已解决前驱。它们产生的候选值中，最小者为 <span class="math display">\[D_t(f)=\min_{\substack{x\in\mathcal S_t\\(x,f)\in
+E}}
+  \{d(x)+w(x,f)\}.
+  \label{eq:frontier}\]</span> 其他到 <span class="math inline">\(f\)</span>
+的较长候选均可排除；如果出现等长，只需保留一个代表。因此，第二步同时包含“最优前缀替换”和“同终点最小化”，二者都由松弛操作体现。经过这一步，当前搜索由前沿值集合
+<span class="math display">\[\{D_t(f):f\in\mathcal F_t\}\]</span>
+表示。</p>
+<p class="minor-heading"><strong>3.2.0.3 第三步：全局最小值提取。</strong></p>
+<p>选取 <span class="math display">\[f^*\in\arg\min_{f\in\mathcal
+F_t}D_t(f),
+\qquad D^*=D_t(f^*).\]</span> 下面证明，<span class="math inline">\(D^*\)</span> 不仅是前沿候选的最小值，而且是整个
+<span class="math inline">\(\mathcal P(\mathcal U_t)\)</span>
+的最小值。</p>
+<p>任取 <span class="math inline">\(P\in\mathcal P(\mathcal
+U_t)\)</span>，设 <span class="math inline">\(f\)</span>
+是其第一个未解决顶点，<span class="math inline">\(x\)</span> 是 <span class="math inline">\(f\)</span> 在路径上的前驱，<span class="math inline">\(L_x\)</span> 是从 <span class="math inline">\(s\)</span> 到 <span class="math inline">\(x\)</span> 的前缀长度。由于 <span class="math inline">\(x\in\mathcal S_t\)</span>，有 <span class="math inline">\(d(x)\le L_x\)</span>。又因为 <span class="math inline">\(D_t(f)\)</span> 是所有从已解决区域跨界到 <span class="math inline">\(f\)</span> 的候选中的最小值，故 <span class="math display">\[D_t(f)\le d(x)+w(x,f)\le L_x+w(x,f).\]</span>
+路径 <span class="math inline">\(P\)</span> 在 <span class="math inline">\(f\)</span> 之后的剩余部分长度非负，因而 <span class="math inline">\(w(P)\ge L_x+w(x,f)\)</span>。再由 <span class="math inline">\(f^*\)</span> 的选取知 <span class="math inline">\(D_t(f)\ge D_t(f^*)\)</span>。综合得到 <span class="math display">\[\begin{aligned}
+w(P)&amp;\ge L_x+w(x,f)\\
+     &amp;\ge d(x)+w(x,f)\\
+     &amp;\ge D_t(f)\\
+     &amp;\ge D_t(f^*)=D^*.
+\end{aligned}\]</span> 确实存在一条长度为 <span class="math inline">\(D^*\)</span>
+的路径：沿某个已解决前驱的最短路径，再接上相应跨界边。根据此前各轮的归纳构造，该最短前缀可以完全位于已解决集合内，因此接上指向未解决顶点的边后仍是简单路径。因此
+<span class="math display">\[D^*=\min_{P\in\mathcal P(\mathcal U_t)}
+w(P)
+     =\min_{f\in\mathcal F_t}D_t(f).\]</span>
+该等式也说明了最小暂定距离选择的来源：前两步已在保持全局最小值不变的前提下完成候选压缩，最后只需对保留的前沿标签取最小值。</p>
+<div class="theorem" id="thm:iteration">
+<p><strong>定理 1</strong> (单轮迭代的正确性).
+<em>若所有边权均为正，且至少有一个可达的未解决顶点，则任何使 <span class="math inline">\(D_t(f)\)</span> 在 <span class="math inline">\(\mathcal F_t\)</span> 上取得最小值的顶点 <span class="math inline">\(f^*\)</span> 都满足 <span class="math display">\[D_t(f^*)=\delta(s,f^*).\]</span>
+因此，其最短路径距离可以被最终确定。</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> 由上述不等式可知，一条达到 <span class="math inline">\(D_t(f^*)\)</span> 的路径就是 <span class="math inline">\(\mathcal P(\mathcal U_t)\)</span>
+中的全局最短路径。特别地，它必然也是所有以 <span class="math inline">\(f^*\)</span> 为终点的路径中的最短路径，因为后者是
+<span class="math inline">\(\mathcal P(\mathcal U_t)\)</span>
+的子集。 ◻</p>
+</div>
+<p>随后，已解决集合扩大，未解决集合缩小： <span class="math display">\[\mathcal S_{t+1}=\mathcal S_t\cup\{f^*\},\qquad
+\mathcal U_{t+1}=\mathcal U_t\setminus\{f^*\}.\]</span>
+下一轮可以重复同样的论证。</p>
+<h2 data-number="3.3" id="section-3-3"><span class="secno">3.3</span>与标准 Dijkstra 算法的对应</h2>
+<p>三步排除并不是额外增加的算法操作，而是对标准算法已有操作的逻辑解释，如表 <a href="#tab:correspondence">1</a>
+所示。前沿限制对应第一步；松弛操作维护第二步得到的最优候选值；<span class="smallcaps">Extract-Min</span> 完成第三步。</p>
+<div id="tab:correspondence"><p style="color:#657382;font-size:13px;text-align:center;margin:0 0 10px;">表 1　三步排除与 Dijkstra 标准操作的对应关系。</p><table><tr><th>排除步骤</th><th>标准操作</th><th>数学作用</th></tr><tr><td>第一步：前沿排除</td><td>前沿限制</td><td>排除越过第一个未解决顶点后继续延伸的路径。</td></tr><tr><td>第二步：松弛排除</td><td>暂定距离的松弛更新</td><td>使用最优前缀，并为每个前沿顶点保留最佳候选。</td></tr><tr><td>第三步：全局最小值</td><td>Extract-Min</td><td>从剩余候选中确定全局最小值。</td></tr></table></div>
+<p>为了更明确地说明三步排除证明与原算法流程的对应，算法 <a href="#alg:standard">1</a>
+给出一份简洁的 Dijkstra 伪代码，并在相应操作旁标注排除步骤。初始时，源点
+<span class="math inline">\(s\)</span>
+已加入已解决集合，算法立即对其出边进行松弛，因此第一次最小值提取使用的前沿值已经计算完成。在之后的每一轮中，提取之后进行的松弛，为下一次提取更新前沿候选值。所以，虽然循环内部先执行
+<span class="smallcaps">Extract-Min</span>
+再执行松弛，但每次提取所依赖的状态，实际上已经完成了第二步。两处出边扫描还明确体现了第一步：只考察从已解决顶点指向未解决顶点的边，因此只有这些边的终点，即前沿顶点，会进入当前候选。</p>
+<section class="algorithm-card" id="alg:standard"><div class="algorithm-head"><span class="overline">算法 1</span><strong>以源点作为初始已解决顶点的 Dijkstra 算法</strong></div><div class="algo-lines"><div><span class="line-no">01</span><span>\(d(s)\gets0\)；对 \(v\ne s\)，置 \(d(v)\gets\infty\)</span></div><div><span class="line-no">02</span><span>\(\mathcal S\gets\{s\}\)；\(Q\gets V\setminus\{s\}\)（以 \(d\) 为键的优先队列）</span></div><div><span class="line-no">03</span><span>for 每条 \((s,v)\in E\) 且 \(v\in Q\)</span><span class="step-tag">第一步 · 仅考虑前沿终点</span></div><div class="indent"><span class="line-no">04</span><span>\(d(v)\gets\min\{d(v),w(s,v)\}\)；更新 \(Q\) 中 \(v\) 的键值</span><span class="step-tag blue">第二步 · 初始松弛</span></div><div><span class="line-no">05</span><span>end for</span></div><div><span class="line-no">06</span><span>while \(Q\ne\varnothing\)</span></div><div class="indent"><span class="line-no">07</span><span>\(u\gets\operatorname{ExtractMin}(Q)\)</span><span class="step-tag blue">第三步 · 前沿最小值</span></div><div class="indent"><span class="line-no">08</span><span>if \(d(u)=\infty\) 则 break</span></div><div class="indent"><span class="line-no">09</span><span>\(\mathcal S\gets\mathcal S\cup\{u\}\)</span></div><div class="indent"><span class="line-no">10</span><span>for 每条 \((u,v)\in E\) 且 \(v\in Q\)</span><span class="step-tag">第一步 · 仅考虑前沿终点</span></div><div class="indent2"><span class="line-no">11</span><span>if \(d(u)+w(u,v)&lt;d(v)\)</span></div><div class="indent3"><span class="line-no">12</span><span>\(d(v)\gets d(u)+w(u,v)\)；更新 \(Q\) 中 \(v\) 的键值</span><span class="step-tag blue">第二步 · 松弛</span></div><div class="indent2"><span class="line-no">13</span><span>end if</span></div><div class="indent"><span class="line-no">14</span><span>end for</span></div><div><span class="line-no">15</span><span>end while</span></div></div><p class="algo-note">步骤一、二分别体现为前沿出边扫描与松弛；步骤三体现为 Extract-Min。</p></section>
+<p>一旦顶点 <span class="math inline">\(u\)</span> 被解决，<span class="math inline">\(d(u)=\delta(s,u)\)</span> 就不再改变，故扫描其出边
+<span class="math inline">\((u,v)\)</span> 时，<span class="math inline">\(d(u)+w(u,v)\)</span>
+已是该边所能提供的最佳扩展值。在标准邻接表实现中，从可达顶点出发的每条有向边至多被检查一次；若其终点尚未解决，才尝试松弛。同一个前沿顶点的暂定距离仍可能多次减小。相比之下，标准
+Bellman–Ford
+算法必须多轮扫描边，因为边起点的距离估计仍可能改进。这也解释了 Dijkstra
+算法效率较高的重要原因。</p>
+<p>Dijkstra
+原文已经采用三个顶点集合，并反复执行候选更新与最小值选择<sup class="cite">[<a class="cite-link" href="#ref-1">1</a>]</sup>。本文证明揭示了其背后的全局路径最小化依据，解释的是原有算法，并非另造一套算法。</p>
+<h1 data-number="4" id="sec:discussion"><span class="secno">4</span>讨论：动态规划而非贪心选择</h1>
+<h2 data-number="4.1" id="section-4-1"><span class="secno">4.1</span>动态规划递推</h2>
+<p>式 (1)
+利用已经确定的最短距离计算前沿候选；新的全局最小距离一经确定，又成为后续迭代的已解子问题。由此，算法通过已求出的最短路径逐步构造新的准确结果。记
+<span class="math inline">\(L_t=\min_{P\in\mathcal P(\mathcal
+U_t)}w(P)\)</span>。由于 <span class="math inline">\(\mathcal P(\mathcal
+U_{t+1})\subseteq\mathcal P(\mathcal U_t)\)</span>，有 <span class="math inline">\(L_{t+1}\ge
+L_t\)</span>。所以，算法按最短路径长度的非降序依次确定各顶点的最短路径；即使边权严格为正，不同终点也可能具有相同的最短距离。正权条件下，任意最短路径的真源点前缀都更短，其终点必然较早解决。但顶点的<em>发现顺序</em>未必与解决顺序一致。</p>
+<p>这一递推可与 Fibonacci 数列相比较： <span class="math display">\[F_0=0,\qquad F_1=1,\qquad
+F_n=F_{n-1}+F_{n-2}.\]</span>
+两者都从已解决子问题构造新的准确结果。不同的是，Fibonacci
+的下一下标预先确定，而 Dijkstra
+根据当前前沿决定下一终点。两者的共同点是依赖已知子问题的解，而非猜测下一问题的答案。</p>
+<h2 data-number="4.2" id="section-4-2"><span class="secno">4.2</span>为什么贪心分类不正确</h2>
+<p>贪心策略按其基本含义，是在不考察整个剩余问题的情况下，直接作出当前局部上最有利的选择；Kleinberg
+和 Tardos 使用 <em>myopic</em>（短视的）描述这一思想<sup class="cite">[<a class="cite-link" href="#ref-4">4</a>]</sup>。Dijkstra 的
+<span class="smallcaps">Extract-Min</span>
+在程序形式上确实很像这种选择。但上述证明的逻辑方向正好相反：被提取的前沿最小标签，已经被证明等于<em>所有终点尚未解决的路径</em>的全局最小值。所谓局部选择，只是经过确定性排除之后，全局最小化在程序中的简洁实现；其依据不是短视决策。再结合算法基于已解最短路径的递推结构，本文将
+Dijkstra 归为动态规划算法，而非贪心算法。</p>
+<h1 data-number="5" id="conclusion"><span class="secno">5</span>结论</h1>
+<p>本文给出了 Dijkstra
+算法的一种从全局到局部的正确性证明。三个确定性的排除步骤，依次将所有未解决终点路径缩减为前沿候选，再压缩为每个前沿顶点对应的一个最优候选，最终确定当前全局最短路径。该路径终点的最短路径最优性，则直接由全局最小性推出。同一论证还说明了正边权条件、最短路径的依次求解，以及每条出边无须重复处理的原因。</p>
+<p>算法每轮利用此前已经确定的最短路径，求出一条新的最短路径。这是一种动态规划过程，而不是推测性的局部贪心选择。由此，Dijkstra
+与 Bellman–Ford 和 Floyd–Warshall
+等早已普遍被理解为动态规划的经典最短路径算法，可以置于一个更加统一的理论框架下<sup class="cite">[<a class="cite-link" href="#ref-5">5</a>]</sup>。这为主要经典最短路径算法提供了更一致的概念分类。</p>
+<h1 class="unnumbered" id="acknowledgments">致谢</h1>
+<p>作者感谢 Zimo Wang
+所提供的有益讨论，这些讨论使本文的核心思想更加清晰。作者同时感谢人工智能大语言模型
+Gemini 和 ChatGPT 在稿件起草、翻译和编辑润色过程中提供的辅助。</p>
+<section class="references" id="references"><h2 class="ref-title">参考文献</h2><ol class="refs"><li id="ref-1">E. W. Dijkstra, “A note on two problems in connexion with graphs,”
+<em>Numerische Mathematik</em>, vol. 1, pp. 269–271, 1959.
+doi:10.1007/BF01386390.</li><li id="ref-2">R. Sedgewick and K. Wayne, <em>Algorithms</em>, 4th ed. Upper Saddle
+River, NJ: Addison-Wesley Professional, 2011.</li><li id="ref-3">G. Brassard and P. Bratley, <em>Algorithmics: Theory and
+Practice</em>. Englewood Cliffs, NJ: Prentice Hall, 1988.</li><li id="ref-4">J. Kleinberg and E. Tardos, <em>Algorithm Design</em>. Boston, MA:
+Pearson/Addison-Wesley, 2006.</li><li id="ref-5">T. H. Cormen, C. E. Leiserson, R. L. Rivest, and C. Stein,
+<em>Introduction to Algorithms</em>, 4th ed. Cambridge, MA: MIT Press,
+2022.</li><li id="ref-6">K. Wayne, “COS 423: Analysis of Algorithms—Greedy Algorithms:
+Shortest Path,” Princeton University, course materials. [Online].
+Available: <a class="uri" href="https://www.cs.princeton.edu/~wayne/cs423/">https://www.cs.princeton.edu/~wayne/cs423/</a>.</li><li id="ref-7">T. Roughgarden, <em>Algorithms Illuminated, Part 2: Graph Algorithms
+and Data Structures</em>. San Francisco, CA: Soundlikeyourself
+Publishing, LLC, 2018.</li><li id="ref-8">R. Bellman, <em>Dynamic Programming</em>. Princeton, NJ: Princeton
+University Press, 1957.</li><li id="ref-9">E. L. Lawler, <em>Combinatorial Optimization: Networks and
+Matroids</em>. New York, NY: Holt, Rinehart and Winston, 1976.</li><li id="ref-10">M. Sniedovich, “Dijkstra’s algorithm revisited: The dynamic
+programming connexion,” <em>Control and Cybernetics</em>, vol. 35,
+no. 3, pp. 599–620, 2006.</li><li id="ref-11">J. Misra, “A walk over the shortest path: Dijkstra’s algorithm viewed
+as fixed-point computation,” <em>Information Processing Letters</em>,
+vol. 77, nos. 2–4, pp. 197–200, 2001.
+doi:10.1016/S0020-0190(00)00202-7.</li><li id="ref-12">A. Lew, “Canonical greedy algorithms and dynamic programming,”
+<em>Control and Cybernetics</em>, vol. 35, no. 3, pp. 621–643, 2006.</li></ol></section>
+</main></div>
+<footer class="footer"><span>© 王圣宝 · 杭州师范大学</span><span>中文版 · <a href="en.html">Read in English</a> · v14 · <a href="https://paulwang2024.github.io/">个人学术主页</a></span></footer>
+<button id="scrolltop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="返回顶部">↑</button>
+<script>
+const links=[...document.querySelectorAll('.toc-link')];const sections=[...document.querySelectorAll('.paper h1,.paper h2')];const progress=document.querySelector('#progress');const up=document.querySelector('#scrolltop');const update=()=>{let max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?100*scrollY/max:0)+'%';up.style.display=scrollY>650?'block':'none';let current=null;for(let s of sections)if(s.getBoundingClientRect().top<145)current=s.id;if(current)for(let a of links)a.classList.toggle('active',a.getAttribute('href')==='#'+current)};window.addEventListener('scroll',update,{passive:true});update();const togg=document.getElementById('menu-toggle');const mobile=document.getElementById('mobile-panel');togg.onclick=()=>{let open=mobile.classList.toggle('open');togg.setAttribute('aria-expanded',String(open))};mobile.addEventListener('click',e=>{if(e.target.closest('a')){mobile.classList.remove('open');togg.setAttribute('aria-expanded','false')}});
+</script></body></html>
